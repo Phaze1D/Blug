@@ -30,7 +30,7 @@ class Post(ndb.Model):
 
     def get_user(self):
         return self.user.get()
-        
+
 
 
 ### Class Methods
@@ -41,7 +41,8 @@ class Post(ndb.Model):
 ### Private Methods
 
     def _pre_put_hook(self):
-        self.user=ndb.Key(User, long( current_user_id() ) )
+        if not bool(self.key.id()):
+            self.user=ndb.Key(User, long( current_user_id() ) )
 
     def __title_errors(self):
         errors = []
@@ -58,7 +59,7 @@ class Post(ndb.Model):
             if not bool(re.match("^[\s\S]{3,1024}$", self.content)):
                 errors.append('must be between 3 and 1024 characters')
         else:
-            errors.append('post missing')
+            errors.append('content missing')
         return errors
 
     def __tags_errors(self):

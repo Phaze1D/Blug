@@ -1,6 +1,9 @@
 
 from google.appengine.ext import ndb
 import re
+import hashlib
+import random
+import string
 
 import logging
 
@@ -25,12 +28,20 @@ class User(ndb.Model):
             'email': self.__email_errors()
         }
 
+    def to_safe_dict(self):
+        sdict = self.to_dict()
+        sdict.pop('password')
+        return sdict
+
+    def get_posts(self):
+        pass
+
 
 ### Class Methods
 
     @classmethod
-    def verify_password(cls, hashPassword, candidate):
-        return hashPassword == cls.hash_password(candidate, hashPassword.split('|')[0])
+    def verify_password(cls, user, raw):
+        return user.password == cls.hash_password(raw, user.password.split('|')[0])
 
     @classmethod
     def hash_password(cls, password, salt=None):
@@ -40,19 +51,21 @@ class User(ndb.Model):
         return '%s|%s' % (salt, hashed)
 
     @classmethod
-    def get_posts(cls, user_id):
-        pass
-
-    @classmethod
     def get_by_username(cls, username):
         return cls.query(cls.username == username).get()
+
+    @classmethod
+    def get_by_email(cls, email):
+        return cls.query(cls.email == email.lower()).get()
+
 
 
 ### Private Methods
 
     def _pre_put_hook(self):
-        if not bool(self.key):
+        if not bool(self.key.id()):
             self.password = User.hash_password(self.password)
+            self.email = self.email.lower()
 
     def __username_errors(self):
         errors = []
@@ -85,6 +98,8 @@ class User(ndb.Model):
         if bool(self.email):
             if not bool(re.match("(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", self.email)):
                 errors.append('invalid email')
+            if bool(User.get_by_email(self.email)):
+                errors.append('email already exists')
         else:
             errors.append('email missing')
         return errors

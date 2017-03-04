@@ -11,7 +11,7 @@ class UsersController():
         pass
 
     def get(self, username):
-        return jsonify(**User.get_by_username( username ).to_dict())
+        return jsonify(**User.get_by_username( username ).to_safe_dict())
 
     def new(self):
         pass
