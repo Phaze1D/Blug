@@ -40,7 +40,8 @@ class User(ndb.Model):
 ### Class Methods
 
     @classmethod
-    def verify_password(cls, user, raw):
+    def verify_password(cls, user, raw=''):
+        raw = raw if bool(raw) else ''
         return user.password == cls.hash_password(raw, user.password.split('|')[0])
 
     @classmethod

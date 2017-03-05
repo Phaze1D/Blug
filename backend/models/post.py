@@ -1,4 +1,5 @@
 from google.appengine.ext import ndb
+from google.appengine.datastore.datastore_query import Cursor
 from backend.helpers.sessions import current_user_id
 from backend.models.user import User
 import re
@@ -32,10 +33,30 @@ class Post(ndb.Model):
         return self.user.get()
 
 
-
 ### Class Methods
 
+    @classmethod
+    def index_page_json(cls, user_id=None, cursor=None, per_page=15):
+        cursor = Cursor(urlsafe=cursor)
+        if user_id:
+            posts, next_cursor, more = cls \
+            .query(cls.user == ndb.Key('User', long(user_id))) \
+            .fetch_page(per_page, start_cursor=cursor)
+        else:
+            posts, next_cursor, more = cls \
+            .query() \
+            .fetch_page(per_page, start_cursor=cursor)
 
+        nc = next_cursor.urlsafe() if bool(next_cursor) else ''
+
+        results = {'cursor': nc, 'more': more, 'posts': []}
+        for post in posts:
+            pd = post.to_dict()
+            pd['id'] = post.key.id()
+            pd['user'] = pd['user'].id()
+            results['posts'].append(pd)
+
+        return results
 
 
 ### Private Methods
@@ -64,6 +85,6 @@ class Post(ndb.Model):
 
     def __tags_errors(self):
         errors = []
-        if bool(self.tags) and len(self.tags) == 0:
+        if self.tags != None and len(self.tags) == 0:
             errors.append('must have atleast 1 tag')
         return errors

@@ -9,7 +9,8 @@ import logging
 class PostsController():
 
     def index(self, user_id = None):
-        pass
+        json_results = Post.index_page_json(user_id=user_id, cursor=request.args.get('cursor'))
+        return jsonify(**json_results)
 
     def get(self, post_id):
         pass
@@ -40,7 +41,23 @@ class PostsController():
         pass
 
     def update(self, post_id):
-        pass
+        if not is_login():
+            return 'redirect to login page'
+
+        post = ndb.Key(Post, long(post_id)).get()
+
+        if bool(post) and current_user_id() == post.user.id():
+            post.title=request.form.get('title')
+            post.content=request.form.get('content')
+            post.tags=request.form.getlist('tags')
+
+            if post.is_valid():
+                key = post.put()
+                post_dict = key.get().to_dict()
+                post_dict['user'] = post_dict['user'].id()
+                return jsonify(**post_dict)
+
+        return jsonify(error='invalid update')
 
     def delete(self, post_id):
         pass
