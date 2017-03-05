@@ -31,6 +31,7 @@ class User(ndb.Model):
     def to_safe_dict(self):
         sdict = self.to_dict()
         sdict.pop('password')
+        sdict['id'] = self.key.id()
         return sdict
 
     def get_posts(self):

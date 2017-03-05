@@ -30,6 +30,7 @@ class CommentsController():
         if comment.is_valid():
             key = comment.put()
             comment_dict = key.get().to_dict()
+            comment_dict['id'] = key.id()
             comment_dict['user'] = comment_dict['user'].id()
             comment_dict['post'] = comment_dict['post'].id()
             return jsonify(**comment_dict)

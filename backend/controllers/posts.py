@@ -31,6 +31,7 @@ class PostsController():
         if post.is_valid():
             key = post.put()
             post_dict = key.get().to_dict()
+            post_dict['id'] = key.id()
             post_dict['user'] = post_dict['user'].id()
             return jsonify(**post_dict)
         else:
@@ -45,7 +46,6 @@ class PostsController():
             return 'redirect to login page'
 
         post = ndb.Key(Post, long(post_id)).get()
-
         if bool(post) and current_user_id() == post.user.id():
             post.title=request.form.get('title')
             post.content=request.form.get('content')
@@ -54,10 +54,13 @@ class PostsController():
             if post.is_valid():
                 key = post.put()
                 post_dict = key.get().to_dict()
+                post_dict['id'] = key.id()
                 post_dict['user'] = post_dict['user'].id()
                 return jsonify(**post_dict)
+            else:
+                return jsonify(**post.errors())
 
-        return jsonify(error='invalid update')
+        return jsonify(error='invalid post id')
 
     def delete(self, post_id):
         pass
