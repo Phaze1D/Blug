@@ -42,7 +42,24 @@ class CommentsController():
         pass
 
     def update(self, comment_id):
-        pass
+        if not is_login():
+            return 'redirect to login'
+
+        comment = ndb.Key(Comment, long(comment_id)).get()
+
+        if bool(comment) and comment.user.id() == current_user_id():
+            comment.comment = request.form.get('comment')
+            if comment.is_valid():
+                key = comment.put()
+                comment_dict = key.get().to_dict()
+                comment_dict['id'] = key.id()
+                comment_dict['user'] = comment_dict['user'].id()
+                comment_dict['post'] = comment_dict['post'].id()
+                return jsonify(**comment_dict)
+            else:
+                return jsonify(**comment.errors())
+
+        return jsonify(error='invalid comment id')
 
     def delete(self, comment_id):
         pass

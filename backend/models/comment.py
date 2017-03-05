@@ -32,6 +32,7 @@ class Comment(ndb.Model):
     def get_post(self):
         return self.post.get()
 
+
 ### Class Methods
 
     @classmethod
@@ -53,6 +54,7 @@ class Comment(ndb.Model):
 
         return results
 
+
 ### Private methods
 
     def _pre_put_hook(self):
@@ -61,9 +63,11 @@ class Comment(ndb.Model):
 
     def __comment_errors(self):
         errors = []
-        if bool(self.comment) and not bool(re.match("^[\s\S]{3,256}$", self.comment)):
+        if bool(self.comment):
+            if not bool(re.match("^[\s\S]{3,256}$", self.comment)):
                 errors.append('must be between 3 and 256 characters')
-
+        else:
+            errors.append('comment missing')
         return errors
 
     def __post_errors(self):
