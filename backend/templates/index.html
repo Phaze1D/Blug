@@ -1,13 +1,78 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Blug</title>
-    <meta name="description" content=" A blog website for everyone ">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-  <script type="text/javascript" src="/static/scripts/bundle.min.js"></script></head>
-  <body>
-    <div id="app"></div>
-  </body>
-</html>
+<head><script type="text/javascript" src="/static/scripts/bundle.min.js"></script></head>Html Webpack Plugin:
+<pre>
+  Error: Child compilation failed:
+  Module build failed: Error: ENOENT: no such file or directory, open '/Users/david/Projects/Udacity/Blog/frontend/src/index.html'
+  
+  
+  - Error: ENOENT: no such file or directory, open '/Users/david/Projects/Udacity/Blog/frontend/src/index.html'
+  
+  - compiler.js:76 
+    [Blog]/[html-webpack-plugin]/lib/compiler.js:76:16
+  
+  - Compiler.js:280 Compiler.<anonymous>
+    [Blog]/[webpack]/lib/Compiler.js:280:10
+  
+  - Compiler.js:480 
+    [Blog]/[webpack]/lib/Compiler.js:480:13
+  
+  - Tapable.js:138 next
+    [Blog]/[tapable]/lib/Tapable.js:138:11
+  
+  - CachePlugin.js:62 Compiler.<anonymous>
+    [Blog]/[webpack]/lib/CachePlugin.js:62:5
+  
+  - Tapable.js:142 Compiler.applyPluginsAsyncSeries
+    [Blog]/[tapable]/lib/Tapable.js:142:13
+  
+  - Compiler.js:477 
+    [Blog]/[webpack]/lib/Compiler.js:477:10
+  
+  - Tapable.js:131 Compilation.applyPluginsAsyncSeries
+    [Blog]/[tapable]/lib/Tapable.js:131:46
+  
+  - Compilation.js:640 
+    [Blog]/[webpack]/lib/Compilation.js:640:19
+  
+  - Tapable.js:131 Compilation.applyPluginsAsyncSeries
+    [Blog]/[tapable]/lib/Tapable.js:131:46
+  
+  - Compilation.js:631 
+    [Blog]/[webpack]/lib/Compilation.js:631:11
+  
+  - Tapable.js:131 Compilation.applyPluginsAsyncSeries
+    [Blog]/[tapable]/lib/Tapable.js:131:46
+  
+  - Compilation.js:626 
+    [Blog]/[webpack]/lib/Compilation.js:626:10
+  
+  - Tapable.js:131 Compilation.applyPluginsAsyncSeries
+    [Blog]/[tapable]/lib/Tapable.js:131:46
+  
+  - Compilation.js:622 sealPart2
+    [Blog]/[webpack]/lib/Compilation.js:622:9
+  
+  - Tapable.js:131 Compilation.applyPluginsAsyncSeries
+    [Blog]/[tapable]/lib/Tapable.js:131:46
+  
+  - Compilation.js:570 Compilation.seal
+    [Blog]/[webpack]/lib/Compilation.js:570:8
+  
+  - Compiler.js:474 
+    [Blog]/[webpack]/lib/Compiler.js:474:16
+  
+  - Tapable.js:225 
+    [Blog]/[tapable]/lib/Tapable.js:225:11
+  
+  - Compilation.js:472 
+    [Blog]/[webpack]/lib/Compilation.js:472:11
+  
+  - Compilation.js:443 
+    [Blog]/[webpack]/lib/Compilation.js:443:13
+  
+  - next_tick.js:67 _combinedTickCallback
+    internal/process/next_tick.js:67:7
+  
+  - next_tick.js:98 process._tickCallback
+    internal/process/next_tick.js:98:9
+  
+</pre>
