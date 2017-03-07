@@ -1,10 +1,16 @@
 import axios from "axios"
+import {
+  POST_NEW,
+  POST_EDIT,
+  POST_GET,
+  USER_POSTS_INDEX,
+  POSTS_INDEX
+} from './ActionTypes'
 
 
-
-const POST_NEW = (title, content, tags) => {
+const postNew = (title, content, tags) => {
   return {
-    type: 'POST_NEW',
+    type: POST_NEW,
     payload: axios.post('/post/create', {
       data: {
         title: title,
@@ -15,9 +21,9 @@ const POST_NEW = (title, content, tags) => {
   }
 }
 
-const POST_EDIT = (post_id, title, content, tags) => {
+const postEdit = (post_id, title, content, tags) => {
   return {
-    type: 'POST_EDIT',
+    type: POST_EDIT,
     payload: axios.put(`/post/${post_id}`, {
       data: {
         title: title,
@@ -29,25 +35,25 @@ const POST_EDIT = (post_id, title, content, tags) => {
 }
 
 
-const POST_GET = (post_id) => {
+const postGet = (post_id) => {
   return {
-    type: 'POST_GET',
+    type: POST_GET,
     payload: axios.get(`/post/${post_id}`)
   }
 }
 
 
-const USER_POSTS_INDEX = (user_id) => {
+const userPostsIndex = (user_id) => {
   return {
-    type: 'USER_POSTS_INDEX',
+    type: USER_POSTS_INDEX,
     payload: axios.get(`user/${user_id}/posts`)
   }
 }
 
 
-const POSTS_INDEX = () => {
+const postsIndex = () => {
   return {
-    type: 'POSTS_INDEX',
+    type: POSTS_INDEX,
     payload: axios.get(`/posts`)
   }
 }

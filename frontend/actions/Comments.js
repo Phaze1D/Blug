@@ -1,9 +1,14 @@
 import axios from "axios"
+import {
+  POST_COMMENT_NEW,
+  COMMENT_EDIT,
+  POST_COMMENT_INDEX
+} from './ActionTypes'
 
 
-const POST_COMMENT_CREATE = (post_id, comment) => {
+const postCommentCreate = (post_id, comment) => {
   return {
-    type: 'POST_COMMENT_CREATE',
+    type: POST_COMMENT_NEW,
     payload: axios.post(`/post/${post_id}/comment/create`, {
       data: {
         comment: comment
@@ -13,9 +18,9 @@ const POST_COMMENT_CREATE = (post_id, comment) => {
 }
 
 
-const COMMENT_EDIT = (comment_id, comment) => {
+const commentEdit = (comment_id, comment) => {
   return {
-    type: 'COMMENT_EDIT',
+    type: COMMENT_EDIT,
     payload: axios.put(`/comment/${comment_id}`, {
       data: {
         comment: comment
@@ -25,9 +30,9 @@ const COMMENT_EDIT = (comment_id, comment) => {
 }
 
 
-const POST_COMMENT_INDEX = (post_id) => {
+const postCommentIndex = (post_id) => {
   return {
-    type: 'POST_COMMENT_INDEX',
+    type: POST_COMMENT_INDEX,
     payload: axios.get(`/post/${post_id}/comments`)
   }
 }

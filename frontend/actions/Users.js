@@ -1,9 +1,13 @@
 import axios from "axios"
+import {
+  USER_NEW,
+  USER_GET
+} from './ActionTypes'
 
 
-const USER_NEW = (username, password, email) => {
+const userNew = (username, password, email) => {
   return {
-    type: 'USER_NEW',
+    type: USER_NEW,
     payload: axios.post('/user/create', {
       data: {
         username: username,
@@ -14,9 +18,9 @@ const USER_NEW = (username, password, email) => {
   }
 }
 
-const USER_GET = (username) => {
+const userGet = (username) => {
   return {
-    type: 'USER_GET',
+    type: USER_GET,
     payload: axios.get(`/user/${username}`)
   }
 }

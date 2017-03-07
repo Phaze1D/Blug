@@ -1,9 +1,13 @@
 import axios from "axios"
+import {
+  LOGIN,
+  LOGOUT
+} from './ActionTypes'
 
 
-const LOGIN = (username, password) => {
+const login = (username, password) => {
   return {
-    type: 'LOGIN',
+    type: LOGIN,
     payload: axios.post('/login', {
       data: {
         username: username,
@@ -14,9 +18,9 @@ const LOGIN = (username, password) => {
 }
 
 
-const LOGOUT = () => {
+const logout = () => {
   return {
-    type: 'LOGOUT',
+    type: LOGOUT,
     payload: axios.delete('/logout')
   }
 }
