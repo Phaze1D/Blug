@@ -1,0 +1,32 @@
+
+.intro
+  height: 100vh
+
+.intro-section
+  display: flex
+  z-index: $z-index-highest
+  position: fixed
+  font-size: 6em
+  justify-content: center
+  width: 100vw
+  height: 50vh
+  overflow: hidden
+  color: $orange-500
+  transition-timing-function: $animation-curve-default
+  transition-duration: $animation-duration*3
+  transition-property: transform
+  background-color: white
+
+#top
+  top: 0
+
+  div
+    margin-top: auto
+    transform: translate(0, 50%)
+
+#bottom
+  bottom: 0
+
+  div
+    margin-bottom: auto
+    transform: translate(0, -50%)
