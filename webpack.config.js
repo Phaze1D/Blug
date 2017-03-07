@@ -8,7 +8,7 @@ var TEMPLATES_PATH = 'backend/templates';
 
 module.exports = {
   watch: true,
-  entry: './frontend/src/index.jsx',
+  entry: './frontend/index.jsx',
   output: {
     filename: 'bundle.min.js',
     publicPath: '/static/scripts/',
@@ -46,7 +46,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: 'head',
       filename: '../../templates/index.html',
-      template: 'frontend/src/index.html'
+      template: 'frontend/index.html'
     })
   ]
 };
