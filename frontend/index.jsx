@@ -13,15 +13,16 @@ import './index.sass'
 document.addEventListener("DOMContentLoaded", function(event) {
   injectTapEventPlugin()
 
-  // const middleware = applyMiddleware(promise())
-  // const store = createStore(reducers, middleware)
-  //
-  // ReactDOM.render(
-  //   <Provider store={store}>{routes()}</Provider>,
-  //   document.getElementById('app')
-  // )
+  const middleware = applyMiddleware(promise({promiseTypeSuffixes: ['LOADING', 'SUCCESS', 'ERROR']}))
+  const store = createStore(reducers, middleware)
 
-  ReactDOM.render( routes(),
+  ReactDOM.render(
+    <Provider store={store}>{routes()}</Provider>,
     document.getElementById('app')
   )
+  
+  //
+  // ReactDOM.render( routes(),
+  //   document.getElementById('app')
+  // )
 });

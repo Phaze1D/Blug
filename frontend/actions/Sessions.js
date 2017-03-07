@@ -5,7 +5,7 @@ import {
 } from './ActionTypes'
 
 
-const login = (username, password) => {
+export const login = (username, password) => {
   return {
     type: LOGIN,
     payload: axios.post('/login', {
@@ -18,7 +18,7 @@ const login = (username, password) => {
 }
 
 
-const logout = () => {
+export const logout = () => {
   return {
     type: LOGOUT,
     payload: axios.delete('/logout')

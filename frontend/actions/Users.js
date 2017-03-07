@@ -5,7 +5,7 @@ import {
 } from './ActionTypes'
 
 
-const userNew = (username, password, email) => {
+export const userNew = (username, password, email) => {
   return {
     type: USER_NEW,
     payload: axios.post('/user/create', {
@@ -18,7 +18,7 @@ const userNew = (username, password, email) => {
   }
 }
 
-const userGet = (username) => {
+export const userGet = (username) => {
   return {
     type: USER_GET,
     payload: axios.get(`/user/${username}`)

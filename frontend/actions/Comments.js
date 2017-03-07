@@ -6,7 +6,7 @@ import {
 } from './ActionTypes'
 
 
-const postCommentCreate = (post_id, comment) => {
+export const postCommentNew = (post_id, comment) => {
   return {
     type: POST_COMMENT_NEW,
     payload: axios.post(`/post/${post_id}/comment/create`, {
@@ -18,7 +18,7 @@ const postCommentCreate = (post_id, comment) => {
 }
 
 
-const commentEdit = (comment_id, comment) => {
+export const commentEdit = (comment_id, comment) => {
   return {
     type: COMMENT_EDIT,
     payload: axios.put(`/comment/${comment_id}`, {
@@ -30,7 +30,7 @@ const commentEdit = (comment_id, comment) => {
 }
 
 
-const postCommentIndex = (post_id) => {
+export const postCommentIndex = (post_id) => {
   return {
     type: POST_COMMENT_INDEX,
     payload: axios.get(`/post/${post_id}/comments`)
