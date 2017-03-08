@@ -1,7 +1,7 @@
 import * as types from '../actions/ActionTypes'
 
 
-export const postNewReducer = (state, action) => {
+export const postNewReducer = (state={}, action) => {
   switch (action.type) {
     case `${types.POST_NEW}_LOADING`:
 
@@ -14,10 +14,11 @@ export const postNewReducer = (state, action) => {
     case `${types.POST_NEW}_ERROR`:
 
       break;
+    default: return state
   }
 }
 
-export const postEditReducer = (state, action) => {
+export const postEditReducer = (state={}, action) => {
   switch (action.type) {
     case `${types.POST_EDIT}_LOADING`:
 
@@ -30,10 +31,11 @@ export const postEditReducer = (state, action) => {
     case `${types.POST_EDIT}_ERROR`:
 
       break;
+    default: return state
   }
 }
 
-export const postGetReducer = (state, action) => {
+export const postGetReducer = (state={}, action) => {
   switch (action.type) {
     case `${types.POST_GET}_LOADING`:
 
@@ -46,10 +48,11 @@ export const postGetReducer = (state, action) => {
     case `${types.POST_GET}_ERROR`:
 
       break;
+    default: return state
   }
 }
 
-export const userPostsIndexReducer = (state, action) => {
+export const userPostsIndexReducer = (state=[], action) => {
   switch (action.type) {
     case `${types.USER_POSTS_INDEX}_LOADING`:
 
@@ -62,10 +65,11 @@ export const userPostsIndexReducer = (state, action) => {
     case `${types.USER_POSTS_INDEX}_ERROR`:
 
       break;
+    default: return state
   }
 }
 
-export const postsIndexReducer = (state, action) => {
+export const postsIndexReducer = (state=[], action) => {
   switch (action.type) {
     case `${types.POSTS_INDEX}_LOADING`:
 
@@ -78,5 +82,6 @@ export const postsIndexReducer = (state, action) => {
     case `${types.POSTS_INDEX}_ERROR`:
 
       break;
+    default: return state
   }
 }

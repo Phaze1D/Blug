@@ -1,4 +1,6 @@
 import { combineReducers } from "redux"
+import reduceReducers from "reduce-reducers"
+
 import {
   userNewReducer,
   userGetReducer
@@ -14,7 +16,8 @@ import {
 
 import {
   loginReducer,
-  logoutReducer
+  logoutReducer,
+  verifyReducer
  } from './Sessions'
 
 import {
@@ -24,17 +27,42 @@ import {
 } from './Comments'
 
 
-export default combineReducers({
+const currentUserReducer = reduceReducers(
   userNewReducer,
-  userGetReducer,
+  loginReducer,
+  logoutReducer,
+  verifyReducer
+)
+
+const userReducer = reduceReducers(
+  userGetReducer
+)
+
+const postReducer = reduceReducers(
   postNewReducer,
   postEditReducer,
   postGetReducer,
+)
+
+const postsReducer = reduceReducers(
   userPostsIndexReducer,
-  postsIndexReducer,
-  loginReducer,
-  logoutReducer,
+  postsIndexReducer
+)
+
+const commentReducer = reduceReducers(
   postCommentNewReducer,
-  commentEditReducer,
+  commentEditReducer
+)
+
+const commentsReducer = reduceReducers(
   postCommentIndexReducer
+)
+
+export default combineReducers({
+  currentUser: currentUserReducer,
+  user: userReducer,
+  post: postReducer,
+  posts: postsReducer,
+  comment: commentReducer,
+  comments: commentsReducer
 })

@@ -3,6 +3,9 @@ from google.appengine.ext import ndb
 from backend.models.post import Post
 from backend.models.comment import Comment
 from backend.helpers.sessions import is_login, current_user_id
+from backend.errors.form_exception import FormException
+from backend.errors.login_exception import LoginException
+from backend.errors.owner_exception import OwnerException
 
 import logging
 
@@ -20,7 +23,7 @@ class CommentsController():
 
     def create(self, post_id):
         if not is_login():
-            return 'redirect to login'
+            raise LoginException(message='not logged in')
 
         comment = Comment(
             post=ndb.Key('Post', long(post_id)),
@@ -35,7 +38,8 @@ class CommentsController():
             comment_dict['post'] = comment_dict['post'].id()
             return jsonify(**comment_dict)
         else:
-            return jsonify(**comment.errors())
+            raise FormException(message='invalid comment data', payload=comment.errors())
+
 
 
     def edit(self, comment_id):
@@ -43,7 +47,7 @@ class CommentsController():
 
     def update(self, comment_id):
         if not is_login():
-            return 'redirect to login'
+            raise LoginException(message='not logged in')
 
         comment = ndb.Key(Comment, long(comment_id)).get()
 
@@ -57,9 +61,9 @@ class CommentsController():
                 comment_dict['post'] = comment_dict['post'].id()
                 return jsonify(**comment_dict)
             else:
-                return jsonify(**comment.errors())
+                raise FormException(message='invalid comment data', payload=comment.errors())
 
-        return jsonify(error='invalid comment id')
+        raise OwnerException(message='unauth data')
 
     def delete(self, comment_id):
         pass

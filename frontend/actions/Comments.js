@@ -9,7 +9,7 @@ import {
 export const postCommentNew = (post_id, comment) => {
   return {
     type: POST_COMMENT_NEW,
-    payload: axios.post(`/post/${post_id}/comment/create`, {
+    payload: axios.post(`/api/post/${post_id}/comment/create`, {
       data: {
         comment: comment
       }
@@ -21,7 +21,7 @@ export const postCommentNew = (post_id, comment) => {
 export const commentEdit = (comment_id, comment) => {
   return {
     type: COMMENT_EDIT,
-    payload: axios.put(`/comment/${comment_id}`, {
+    payload: axios.put(`/api/comment/${comment_id}`, {
       data: {
         comment: comment
       }
@@ -33,6 +33,6 @@ export const commentEdit = (comment_id, comment) => {
 export const postCommentIndex = (post_id) => {
   return {
     type: POST_COMMENT_INDEX,
-    payload: axios.get(`/post/${post_id}/comments`)
+    payload: axios.get(`/api/post/${post_id}/comments`)
   }
 }

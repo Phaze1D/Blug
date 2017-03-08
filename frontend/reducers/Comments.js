@@ -1,7 +1,7 @@
 import * as types from '../actions/ActionTypes'
 
 
-export const postCommentNewReducer = (state, action) => {
+export const postCommentNewReducer = (state={}, action) => {
   switch (action.type) {
     case `${types.POST_COMMENT_NEW}_LOADING`:
 
@@ -15,11 +15,11 @@ export const postCommentNewReducer = (state, action) => {
 
       break;
 
-
+    default: return state
   }
 }
 
-export const commentEditReducer = (state, action) => {
+export const commentEditReducer = (state={}, action) => {
   switch (action.type) {
     case `${types.COMMENT_EDIT}_LOADING`:
 
@@ -33,11 +33,11 @@ export const commentEditReducer = (state, action) => {
 
       break;
 
-
+    default: return state
   }
 }
 
-export const postCommentIndexReducer = (state, action) => {
+export const postCommentIndexReducer = (state=[], action) => {
   switch (action.type) {
     case `${types.POST_COMMENT_INDEX}_LOADING`:
 
@@ -51,6 +51,6 @@ export const postCommentIndexReducer = (state, action) => {
 
       break;
 
-
+    default: return state
   }
 }

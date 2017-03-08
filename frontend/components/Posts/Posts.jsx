@@ -8,6 +8,8 @@ export default class Posts extends React.Component{
   }
 
   render(){
-    return null
+    return (
+      <h1>POSTS</h1>
+    )
   }
 }

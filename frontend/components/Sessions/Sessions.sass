@@ -1,6 +1,7 @@
 
 
 .sessions-card
+  margin: auto 0
   width: 320px
   padding: 0 24px 24px
   background-color: white
@@ -8,6 +9,8 @@
   h1
     color: $color-accent
     font-size: 2em
+    font-weight: 400
+    margin-bottom: 10px
 
 .button-wrapper
   margin-top: 30px
@@ -20,10 +23,20 @@
 
 .hidden-wrapper
   max-height: 0
+  height: 90px
   overflow: hidden
   transition-timing-function: $animation-curve-default
   transition-duration: $animation-duration
   transition-property: max-height
 
   &.show
-    max-height: 72px
+    max-height: 90px
+
+
+.session-progress-bar
+  align-self: flex-start
+  height: 8px
+  width: 100%
+
+  .bar
+    height: 8px !important

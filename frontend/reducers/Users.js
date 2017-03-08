@@ -1,25 +1,42 @@
 import * as types from '../actions/ActionTypes'
 
-export const userNewReducer = (state, action) => {
+
+export const userNewReducer = (state={}, action) => {
+  let newState = null
+
   switch (action.type) {
     case `${types.USER_NEW}_LOADING`:
-
-      break;
+      newState = {
+        ...state,
+        fetching: true,
+        loggedIn: false
+      }
+      return newState
 
     case `${types.USER_NEW}_SUCCESS`:
+      newState = {
+        ...state,
+        fetching: false,
+        loggedIn: true
+      }
+      return newState
 
-      break;
 
     case `${types.USER_NEW}_ERROR`:
+      newState = {
+        ...state,
+        fetching: false,
+        loggedIn: false,
+        errors: action.payload.response.data
+      }
+      return newState
 
-      break;
-
-
+    default: return state
   }
 }
 
 
-export const userGetReducer = (state, action) => {
+export const userGetReducer = (state={}, action) => {
   switch (action.type) {
     case `${types.USER_GET}_LOADING`:
 
@@ -33,6 +50,6 @@ export const userGetReducer = (state, action) => {
 
       break;
 
-
+    default: return state
   }
 }

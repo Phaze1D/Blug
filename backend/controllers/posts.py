@@ -3,6 +3,9 @@ from google.appengine.ext import ndb
 from backend.models.post import Post
 from backend.models.user import User
 from backend.helpers.sessions import is_login, current_user_id
+from backend.errors.form_exception import FormException
+from backend.errors.login_exception import LoginException
+from backend.errors.owner_exception import OwnerException
 
 import logging
 
@@ -20,7 +23,7 @@ class PostsController():
 
     def create(self):
         if not is_login():
-            return 'redirect to login page'
+            raise LoginException(message='not logged in')
 
         post = Post(
             title=request.form.get('title'),
@@ -35,7 +38,7 @@ class PostsController():
             post_dict['user'] = post_dict['user'].id()
             return jsonify(**post_dict)
         else:
-            return jsonify(**post.errors())
+            raise FormException(message='invalid post data', payload=post.errors())
 
 
     def edit(self, post_id):
@@ -43,7 +46,7 @@ class PostsController():
 
     def update(self, post_id):
         if not is_login():
-            return 'redirect to login page'
+            raise LoginException(message='not logged in')
 
         post = ndb.Key(Post, long(post_id)).get()
         if bool(post) and current_user_id() == post.user.id():
@@ -58,9 +61,9 @@ class PostsController():
                 post_dict['user'] = post_dict['user'].id()
                 return jsonify(**post_dict)
             else:
-                return jsonify(**post.errors())
+                raise FormException(message='invalid post data', payload=post.errors())
 
-        return jsonify(error='invalid post id')
+        raise OwnerException(message='unauth data')
 
     def delete(self, post_id):
         pass

@@ -31,7 +31,8 @@ def logout():
 def verify_user_cookie():
     if bool(request.cookies.get('user_id')):
         user_id = request.cookies.get('user_id').split('|')[0]
-        return hash_cookie(user_id) == request.cookies.get('user_id')
+        key = User.get_by_id(long(user_id))
+        return bool(key) and hash_cookie(user_id) == request.cookies.get('user_id')
     return False
 
 def hash_cookie(user_id):

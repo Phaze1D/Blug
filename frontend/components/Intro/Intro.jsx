@@ -15,7 +15,7 @@ export default class Intro extends React.Component{
     setTimeout( () => {
       document.getElementById('top').style.transform = 'translate(0,-110%)'
       document.getElementById('bottom').style.transform = 'translate(0,110%)'
-    }, 2000)
+    }, 1000)
   }
 
   render(){

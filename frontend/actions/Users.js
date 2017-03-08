@@ -6,21 +6,20 @@ import {
 
 
 export const userNew = (username, password, email) => {
+  let data = new FormData();
+  data.append('username', username)
+  data.append('email', email)
+  data.append('password', password)
+
   return {
     type: USER_NEW,
-    payload: axios.post('/user/create', {
-      data: {
-        username: username,
-        email: email,
-        password: password
-      }
-    })
+    payload: axios.post('/api/user/create', data)
   }
 }
 
 export const userGet = (username) => {
   return {
     type: USER_GET,
-    payload: axios.get(`/user/${username}`)
+    payload: axios.get(`/api/user/${username}`)
   }
 }
