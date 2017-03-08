@@ -25,7 +25,10 @@ class SessionsController():
         if bool(user) and User.verify_password(user, request.form.get('password')):
             return login(user.key, user)
         else:
-            raise FormException(message='invalid user data', payload=user.errors())
+            error = {
+                'password': ['invalid username/password combination']
+            }
+            raise FormException(message='invalid login', payload=error)
 
 
     def delete(self):

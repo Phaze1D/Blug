@@ -7,14 +7,13 @@ import {
 
 
 export const login = (username, password) => {
+  let data = new FormData();
+  data.append('username', username)
+  data.append('password', password)
+  
   return {
     type: LOGIN,
-    payload: axios.post('/api/login', {
-      data: {
-        username: username,
-        password: password
-      }
-    })
+    payload: axios.post('/api/login', data)
   }
 }
 

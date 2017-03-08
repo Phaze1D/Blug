@@ -83,7 +83,7 @@ export default class Sessions extends React.Component{
         </div>
         <section className='card sessions-card'>
           <h1>Blug</h1>
-          <form id='login-form' method='#noneya' action='POST' onSubmit={this.handleSubmit.bind(this)}>
+          <form id='login-form' method='#noneya' action='POST' onSubmit={this.handleSubmit.bind(this)} >
             <div className={emailWrapper}>
               <TextField
                 id='email'
@@ -92,6 +92,7 @@ export default class Sessions extends React.Component{
                 type='text'
                 fullWidth={true}
                 errorText={emailErrors}
+                autoComplete='off'
               />
 
             </div>
@@ -104,6 +105,7 @@ export default class Sessions extends React.Component{
                 type='text'
                 fullWidth={true}
                 errorText={usernameErrors}
+                autoComplete='off'
               />
             </div>
 
@@ -115,6 +117,7 @@ export default class Sessions extends React.Component{
                 type='password'
                 fullWidth={true}
                 errorText={passwordErrors}
+                autoComplete='off'
               />
             </div>
 
