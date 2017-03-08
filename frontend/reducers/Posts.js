@@ -72,16 +72,29 @@ export const userPostsIndexReducer = (state=[], action) => {
 export const postsIndexReducer = (state=[], action) => {
   switch (action.type) {
     case `${types.POSTS_INDEX}_LOADING`:
-
-      break;
+      return {
+        ...state,
+        fetching: true,
+        posts: [],
+      }
 
     case `${types.POSTS_INDEX}_SUCCESS`:
-
-      break;
+      return {
+        ...state,
+        fetching: false,
+        cursor: action.payload.data.cursor,
+        more: action.payload.data.more,
+        posts: action.payload.data.posts,
+      }
 
     case `${types.POSTS_INDEX}_ERROR`:
+      return {
+        ...state,
+        fetching: false,
+        posts: [],
+        error: action.payload.message
+      }
 
-      break;
     default: return state
   }
 }

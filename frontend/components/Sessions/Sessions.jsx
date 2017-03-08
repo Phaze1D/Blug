@@ -37,6 +37,7 @@ export default class Sessions extends React.Component{
 
   handleV2Tap(event){
     this.setState({isLoginForm: !this.state.isLoginForm})
+    this.props.currentUser.errors=null
   }
 
   handleSubmit(event){
@@ -59,28 +60,18 @@ export default class Sessions extends React.Component{
       errors
     } = this.props.currentUser
 
-    let emailErrors = errors && errors.email ? errors.email[0] : null
-    let usernameErrors = errors && errors.username ? errors.username[0] : null
-    let passwordErrors = errors && errors.password ? errors.password[0] : null
+    this.emailErrors = errors && errors.email ? errors.email[0] : null
+    this.usernameErrors = errors && errors.username ? errors.username[0] : null
+    this.passwordErrors = errors && errors.password ? errors.password[0] : null
 
     let emailWrapper = classnames('hidden-wrapper', {'show': !this.state.isLoginForm})
 
-
-    if(verifing){
-      return(
-        <div className='flex-central'>
-          <div className='session-progress-bar'>
-            <LinearProgress mode="indeterminate" className='bar' color='rgb(41,121,255)'/>
-          </div>
-        </div>
-      )
+    if( verifing ){
+      return null
     }
 
     return(
       <div className='flex-central'>
-        <div className='session-progress-bar'>
-          {fetching ? <LinearProgress mode="indeterminate" className='bar' color='rgb(41,121,255)'/> : null}
-        </div>
         <section className='card sessions-card'>
           <h1>Blug</h1>
           <form id='login-form' method='#noneya' action='POST' onSubmit={this.handleSubmit.bind(this)} >
@@ -91,7 +82,7 @@ export default class Sessions extends React.Component{
                 floatingLabelText='Email'
                 type='text'
                 fullWidth={true}
-                errorText={emailErrors}
+                errorText={this.emailErrors}
                 autoComplete='off'
               />
 
@@ -104,7 +95,7 @@ export default class Sessions extends React.Component{
                 floatingLabelText='Username'
                 type='text'
                 fullWidth={true}
-                errorText={usernameErrors}
+                errorText={this.usernameErrors}
                 autoComplete='off'
               />
             </div>
@@ -116,7 +107,7 @@ export default class Sessions extends React.Component{
                 floatingLabelText='Password'
                 type='password'
                 fullWidth={true}
-                errorText={passwordErrors}
+                errorText={this.passwordErrors}
                 autoComplete='off'
               />
             </div>

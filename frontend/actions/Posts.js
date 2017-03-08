@@ -41,16 +41,24 @@ export const postGet = (post_id) => {
   }
 }
 
-export const userPostsIndex = (user_id) => {
+export const userPostsIndex = (user_id, cursor=null) => {
   return {
     type: USER_POSTS_INDEX,
-    payload: axios.get(`/api/user/${user_id}/posts`)
+    payload: axios.get(`/api/user/${user_id}/posts`, {
+      params:{
+        cursor: cursor
+      }
+    })
   }
 }
 
-export const postsIndex = () => {
+export const postsIndex = (cursor=null) => {
   return {
     type: POSTS_INDEX,
-    payload: axios.get(`/api/posts`)
+    payload: axios.get(`/api/posts`, {
+      params:{
+        cursor: cursor
+      }
+    })
   }
 }

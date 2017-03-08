@@ -1,33 +1,28 @@
 import * as types from '../actions/ActionTypes'
 
 export const loginReducer = (state={}, action) => {
-  let newState = null
-  
   switch (action.type) {
     case `${types.LOGIN}_LOADING`:
-      newState = {
+      return {
         ...state,
         fetching: true,
         loggedIn: false
       }
-      return newState
 
     case `${types.LOGIN}_SUCCESS`:
-      newState = {
+      return {
         ...state,
         fetching: false,
         loggedIn: true
       }
-      return newState
 
     case `${types.LOGIN}_ERROR`:
-      newState = {
+      return {
         ...state,
         fetching: false,
         loggedIn: false,
         errors: action.payload.response.data
       }
-      return newState
 
     default: return state
   }

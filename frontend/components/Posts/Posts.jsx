@@ -1,6 +1,8 @@
 import React from 'react'
+import Layout from '../Layout/Layout'
 import { connect } from 'react-redux'
 import { userPostsIndex, postsIndex } from '../../actions/Posts'
+
 
 
 
@@ -15,14 +17,20 @@ export default class Posts extends React.Component{
   }
 
   componentWillMount() {
-
+    this.props.dispatch(postsIndex())
   }
 
   render(){
-    return (
-      <div>
+    const {
+      posts,
+      cursor,
+      more
+    } = this.props.posts
 
-      </div>
+    return (
+      <Layout>
+        POSTS
+      </Layout>
     )
   }
 }

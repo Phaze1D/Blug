@@ -6,30 +6,26 @@ export const userNewReducer = (state={}, action) => {
 
   switch (action.type) {
     case `${types.USER_NEW}_LOADING`:
-      newState = {
+      return {
         ...state,
         fetching: true,
         loggedIn: false
       }
-      return newState
 
     case `${types.USER_NEW}_SUCCESS`:
-      newState = {
+      return {
         ...state,
         fetching: false,
         loggedIn: true
       }
-      return newState
-
 
     case `${types.USER_NEW}_ERROR`:
-      newState = {
+      return {
         ...state,
         fetching: false,
         loggedIn: false,
         errors: action.payload.response.data
       }
-      return newState
 
     default: return state
   }
