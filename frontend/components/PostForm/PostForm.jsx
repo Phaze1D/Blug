@@ -7,9 +7,9 @@ import LinearProgress from 'material-ui/LinearProgress'
 import ContentClear from 'material-ui/svg-icons/content/clear'
 import ActionDone from 'material-ui/svg-icons/action/done'
 import classnames from 'classnames'
-import { hashHistory } from 'react-router'
 import { connect } from 'react-redux'
 import { postNew, postEdit } from '../../actions/Posts'
+import { resetErrors } from '../../actions/ActionTypes'
 
 
 @connect((store) => {
@@ -23,24 +23,6 @@ export default class PostForm extends React.Component{
   }
 
 
-  shouldComponentUpdate(nextProps, nextState) {
-    let if_going_to_open = this.props.open && nextProps.open
-    let if_done_verifing_and_not_logged_in = !nextProps.currentUser.verifing && !nextProps.currentUser.loggedIn
-
-    if( if_going_to_open && if_done_verifing_and_not_logged_in ){
-      hashHistory.push('/login');
-      return false
-    }
-
-    return true
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.post.success && !nextProps.post.fetching && this.props.open){
-      nextProps.onRequestChange() 
-    }
-  }
-
   handleOverlayClick(event){
     if(event.target.classList.contains('overlay')){
       this.props.onRequestChange()
@@ -52,6 +34,19 @@ export default class PostForm extends React.Component{
     let title = document.getElementById('title').value
     let content = document.getElementById('content').value
     this.props.dispatch(postNew(title, content))
+    .then(this.onPostSuccess.bind(this), this.onPostError.bind(this))
+  }
+
+  onPostSuccess(){
+    this.props.onRequestChange()
+  }
+
+  onPostError(){
+
+  }
+
+  handleOnFocus(event){
+    this.props.dispatch(resetErrors("POST"))
   }
 
   render(){
@@ -64,8 +59,8 @@ export default class PostForm extends React.Component{
       errors
     } = this.props.post
 
-    const asideClasses = classnames('side-view', {'open': this.props.open && loggedIn})
-    const overClasses = classnames('overlay', {'open': this.props.open && loggedIn})
+    const asideClasses = classnames('side-view', {'open': this.props.open})
+    const overClasses = classnames('overlay', {'open': this.props.open})
 
     return(
       <Portal isOpened={true}>
@@ -74,13 +69,13 @@ export default class PostForm extends React.Component{
           <aside className={asideClasses}>
             <form id='post-form' onSubmit={this.handleSubmit.bind(this)}>
               <header className='form-bar'>
-                <IconButton className='form-button' onTouchTap={this.props.onRequestChange}>
+                <IconButton className='form-button' onTouchTap={this.props.onRequestChange} disabled={fetching}>
                   <ContentClear/>
                 </IconButton>
 
                 <h3>{this.props.title}</h3>
 
-                <IconButton className='form-button right' type='submit'>
+                <IconButton className='form-button right' type='submit' disabled={fetching}>
                   <ActionDone/>
                 </IconButton>
               </header>
@@ -91,7 +86,7 @@ export default class PostForm extends React.Component{
                 </div>
               }
 
-              {this.props.open ? <FormFields errors={errors}/> : null}
+              {this.props.open ? <FormFields errors={errors} onFocus={this.handleOnFocus.bind(this)}/> : null}
 
             </form>
           </aside>
@@ -116,6 +111,7 @@ const FormFields = (props) => {
           type='text'
           fullWidth={true}
           errorText={titleError}
+          onFocus={props.onFocus}
           autoComplete='off'/>
       </div>
 
@@ -128,6 +124,7 @@ const FormFields = (props) => {
           fullWidth={true}
           multiLine={true}
           errorText={contentError}
+          onFocus={props.onFocus}
           autoComplete='off'/>
       </div>
     </div>

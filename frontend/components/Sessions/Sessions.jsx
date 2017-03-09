@@ -7,6 +7,7 @@ import { connect } from "react-redux"
 import { hashHistory } from 'react-router';
 import { login, verify } from '../../actions/Sessions'
 import { userNew } from '../../actions/Users'
+import { resetErrors } from '../../actions/ActionTypes'
 
 
 
@@ -20,24 +21,22 @@ export default class Sessions extends React.Component{
   constructor(props){
     super(props)
     this.state = {isLoginForm: true}
-
   }
 
-  componentWillMount() {
-    this.props.dispatch(verify())
+  componentWillMount(){
+    this.props.dispatch(verify()).then(this.onLoggedIn.bind(this), this.onLoggedInError.bind(this))
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if(!nextProps.currentUser.verifing && nextProps.currentUser.loggedIn){
-      hashHistory.push('/posts');
-      return false
-    }
-    return true
+  onLoggedIn(){
+    hashHistory.push('/posts');
+  }
+
+  onLoggedInError(){
   }
 
   handleV2Tap(event){
     this.setState({isLoginForm: !this.state.isLoginForm})
-    this.props.currentUser.errors=null
+    this.props.dispatch(resetErrors('SESSION'))
   }
 
   handleSubmit(event){
@@ -47,8 +46,10 @@ export default class Sessions extends React.Component{
     let password = document.getElementById('password').value
     if(this.state.isLoginForm){
       this.props.dispatch(login(username, password))
+      .then(this.onLoggedIn.bind(this), this.onLoggedInError.bind(this))
     }else{
       this.props.dispatch(userNew(username, password, email))
+      .then(this.onLoggedIn.bind(this), this.onLoggedInError.bind(this))
     }
   }
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
+import { hashHistory } from 'react-router'
 import IconButton from 'material-ui/IconButton'
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
@@ -28,7 +29,15 @@ export default class Layout extends React.Component{
 
   toggleRightSide(event){
     this.props.dispatch(verify())
+    .then(this.onVerified.bind(this), this.onVerifiedError.bind(this))
+  }
+
+  onVerified(){
     this.setState({rightOpen: true})
+  }
+
+  onVerifiedError(){
+    hashHistory.push('/login');
   }
 
   render(){
@@ -58,7 +67,7 @@ export default class Layout extends React.Component{
           </IconButton>
         </header>
 
-        
+
         <FloatingActionButton className='fab' secondary={true} onTouchTap={this.toggleRightSide.bind(this)}>
           <ContentAdd />
         </FloatingActionButton>

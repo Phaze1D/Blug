@@ -31,7 +31,7 @@ export const postNewReducer = (state={}, action) => {
         errors: action.payload.response.data
       }
 
-    case `${types.SESSION_VERIFY}_LOADING`:
+    case `${types.RESET_ERRORS}_POST`:
       return {
         ...state,
         success: false,

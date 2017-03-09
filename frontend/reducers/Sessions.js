@@ -26,6 +26,13 @@ export const loginReducer = (state={}, action) => {
         errors: action.payload.response.data
       }
 
+    case `${types.RESET_ERRORS}_SESSION`:
+      return {
+        ...state,
+        loggedIn: false,
+        errors: null
+      }
+
     default: return state
   }
 }
@@ -70,6 +77,7 @@ export const verifyReducer = (state={}, action) => {
         loggedIn: false
       }
 
+  
     default: return state
   }
 }

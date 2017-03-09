@@ -11,3 +11,12 @@ export const LOGOUT              = 'LOGOUT'
 export const USER_NEW            = 'USER_NEW'
 export const USER_GET            = 'USER_GET'
 export const SESSION_VERIFY      = 'SESSION_VERIFY'
+export const RESET_ERRORS        = 'RESET_ERRORS'
+
+
+
+export const resetErrors = (type) => {
+  return {
+    type: `${RESET_ERRORS}_${type}`
+  }
+}
