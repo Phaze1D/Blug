@@ -5,10 +5,12 @@ from backend.errors.form_exception import FormException
 from backend.errors.login_exception import LoginException
 
 import logging
+import time
 
 class SessionsController():
 
     def get(self):
+        # time.sleep(5)
         if is_login():
             return jsonify(logged_in=True)
 

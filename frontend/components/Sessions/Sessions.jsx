@@ -27,8 +27,8 @@ export default class Sessions extends React.Component{
     this.props.dispatch(verify())
   }
 
-  componentWillUpdate(nextProps, nextState) {
-    if(nextProps.currentUser.loggedIn){
+  shouldComponentUpdate(nextProps, nextState) {
+    if(!nextProps.currentUser.verifing && nextProps.currentUser.loggedIn){
       hashHistory.push('/posts');
       return false
     }
@@ -42,7 +42,6 @@ export default class Sessions extends React.Component{
 
   handleSubmit(event){
     event.preventDefault()
-    let form = document.getElementById('login-form')
     let username = document.getElementById('username').value
     let email = document.getElementById('email').value
     let password = document.getElementById('password').value
@@ -83,8 +82,7 @@ export default class Sessions extends React.Component{
                 type='text'
                 fullWidth={true}
                 errorText={this.emailErrors}
-                autoComplete='off'
-              />
+                autoComplete='off'/>
 
             </div>
 
@@ -96,8 +94,7 @@ export default class Sessions extends React.Component{
                 type='text'
                 fullWidth={true}
                 errorText={this.usernameErrors}
-                autoComplete='off'
-              />
+                autoComplete='off'/>
             </div>
 
             <div className='input-wrapper'>
@@ -108,8 +105,7 @@ export default class Sessions extends React.Component{
                 type='password'
                 fullWidth={true}
                 errorText={this.passwordErrors}
-                autoComplete='off'
-              />
+                autoComplete='off'/>
             </div>
 
             <div className="button-wrapper">
@@ -119,8 +115,7 @@ export default class Sessions extends React.Component{
                 secondary={true}
                 fullWidth={true}
                 disabled={fetching}
-                type='submit'
-              />
+                type='submit'/>
             </div>
 
             <div className="button-wrapper">

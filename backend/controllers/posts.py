@@ -30,7 +30,6 @@ class PostsController():
         post = Post(
             title=request.form.get('title'),
             content=request.form.get('content'),
-            tags=request.form.getlist('tags')
         )
 
         if post.is_valid():
@@ -54,7 +53,6 @@ class PostsController():
         if bool(post) and current_user_id() == post.user.id():
             post.title=request.form.get('title')
             post.content=request.form.get('content')
-            post.tags=request.form.getlist('tags')
 
             if post.is_valid():
                 key = post.put()

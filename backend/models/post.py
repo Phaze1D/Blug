@@ -12,13 +12,12 @@ class Post(ndb.Model):
     content = ndb.TextProperty(required=True)
     likes = ndb.IntegerProperty(default=0)
     dislikes = ndb.IntegerProperty(default=0)
-    tags = ndb.StringProperty(repeated=True)
     created = ndb.DateTimeProperty(auto_now_add=True)
 
 ### Instance Methods
 
     def is_valid(self):
-        if bool( self.__title_errors() ) or bool( self.__content_errors() ) or bool( self.__tags_errors() ):
+        if bool( self.__title_errors() ) or bool( self.__content_errors() ):
             return False
         return True
 
@@ -26,7 +25,6 @@ class Post(ndb.Model):
         return {
             'title': self.__title_errors(),
             'content': self.__content_errors(),
-            'tags': self.__tags_errors()
         }
 
     def get_user(self):
@@ -81,10 +79,4 @@ class Post(ndb.Model):
                 errors.append('must be between 3 and 1024 characters')
         else:
             errors.append('content missing')
-        return errors
-
-    def __tags_errors(self):
-        errors = []
-        if self.tags != None and len(self.tags) == 0:
-            errors.append('must have atleast 1 tag')
         return errors

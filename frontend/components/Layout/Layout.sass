@@ -1,0 +1,72 @@
+
+main
+  width: 100vw
+  min-height: 100vh
+
+
+.layout-bar
+  display: flex
+  align-items: center
+  position: fixed
+  top: 0
+  width: 100%
+  height: 56px
+  background-color: $white
+  border-bottom: 1px solid $grey-200
+  padding: 0 16px
+
+
+.logo
+  width: 64px
+  margin: 0 16px 0 0
+
+
+.search-button
+  +header-button-dark()
+  margin: 0 0 0 auto !important
+
+
+.nav-bar
+  margin-left: auto
+  max-width: 1000px
+  height: 100%
+  color: $color-primary
+
+  ul
+    list-style: none
+    height: 100%
+    margin: 0
+    padding: 0
+
+  li
+    font-size: 1.2em
+    display: inline-block
+    padding: 0 22px
+    height: 100%
+
+    &.active
+      border-bottom: 2px solid $color-accent
+
+
+  a
+    display: flex
+    flex-direction: column
+    justify-content: center
+    text-decoration: none
+    color: inherit
+    height: 100%
+    width: 100%
+
+
+.fab
+  position: fixed
+  bottom: 16px
+  right: 16px
+
+@media screen and (min-width: $layout-breakpoint-sm)
+  .layout-bar
+    height: 64px
+
+  .fab
+    bottom: 26px
+    right: 26px

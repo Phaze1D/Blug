@@ -8,27 +8,24 @@ import {
 } from './ActionTypes'
 
 
-export const postNew = (title, content, tags) => {
+export const postNew = (title='', content='') => {
+  let data = new FormData();
+  data.append('title', title)
+  data.append('content', content)
+
   return {
     type: POST_NEW,
-    payload: axios.post('/api/post/create', {
-      data: {
-        title: title,
-        content: content,
-        tags: tags // CAREFUL ERROR
-      }
-    })
+    payload: axios.post('/api/post/create', data)
   }
 }
 
-export const postEdit = (post_id, title, content, tags) => {
+export const postEdit = (post_id, title, content) => {
   return {
     type: POST_EDIT,
     payload: axios.put(`/api/post/${post_id}`, {
       data: {
         title: title,
         content: content,
-        tags: tags // CAREFUL ERROR
       }
     })
   }

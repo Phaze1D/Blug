@@ -6,14 +6,16 @@ export const loginReducer = (state={}, action) => {
       return {
         ...state,
         fetching: true,
-        loggedIn: false
+        loggedIn: false,
+        errors: null
       }
 
     case `${types.LOGIN}_SUCCESS`:
       return {
         ...state,
         fetching: false,
-        loggedIn: true
+        loggedIn: true,
+        errors: null
       }
 
     case `${types.LOGIN}_ERROR`:
@@ -50,7 +52,8 @@ export const verifyReducer = (state={}, action) => {
     case `${types.SESSION_VERIFY}_LOADING`:
       return {
         ...state,
-        verifing: true
+        verifing: true,
+        loggedIn: false
       }
 
     case `${types.SESSION_VERIFY}_SUCCESS`:

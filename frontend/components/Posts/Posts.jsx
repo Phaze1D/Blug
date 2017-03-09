@@ -29,7 +29,7 @@ export default class Posts extends React.Component{
 
     return (
       <Layout>
-        POSTS
+        
       </Layout>
     )
   }

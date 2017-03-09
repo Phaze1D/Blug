@@ -4,16 +4,40 @@ import * as types from '../actions/ActionTypes'
 export const postNewReducer = (state={}, action) => {
   switch (action.type) {
     case `${types.POST_NEW}_LOADING`:
-
-      break;
+      return {
+        ...state,
+        fetching: true,
+        success: false,
+        post: null,
+        errors: null
+      }
 
     case `${types.POST_NEW}_SUCCESS`:
+      return {
+        ...state,
+        fetching: false,
+        success: true,
+        post: action.payload.data,
+        errors: null
+      }
 
-      break;
 
     case `${types.POST_NEW}_ERROR`:
+      return {
+        ...state,
+        fetching: false,
+        success: false,
+        post: null,
+        errors: action.payload.response.data
+      }
 
-      break;
+    case `${types.SESSION_VERIFY}_LOADING`:
+      return {
+        ...state,
+        success: false,
+        errors: null
+      }
+
     default: return state
   }
 }
