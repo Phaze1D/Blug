@@ -44,10 +44,10 @@ export default class Posts extends React.Component{
     this.setState({updateIndex: index})
     this.props.dispatch(resetErrors('POST'))
     this.props.dispatch(postGet(id, index))
-    .then(this.onPostGet.bind(this))
+    .then(this.onPostGot.bind(this))
   }
 
-  onPostGet(){
+  onPostGot(){
     if(this.props.post.post.isOwner){
       this.setState({rightOpen: true})
     }else{

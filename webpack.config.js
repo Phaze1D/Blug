@@ -10,7 +10,7 @@ module.exports = {
   watch: true,
   entry: './frontend/index.jsx',
   output: {
-    filename: 'bundle.min.js',
+    filename: 'bundle.[hash].min.js',
     publicPath: '/static/scripts/',
     path: SCRIPTS_PATH
   },

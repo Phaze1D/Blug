@@ -4,6 +4,7 @@ from backend.models.post import Post
 from backend.models.user import User
 import re
 
+import logging
 
 class Dislike(ndb.Model):
     post = ndb.KeyProperty(kind='Post', required=True)
@@ -20,4 +21,10 @@ class Dislike(ndb.Model):
 
     @classmethod
     def already_exist(cls, post_id, user_id):
-        return bool(cls.query( cls.post == ndb.Key('Post', long(post_id) ), cls.user == ndb.Key('User', long(user_id) ) ) )
+        dislike = cls.query( cls.post == ndb.Key('Post', long(post_id) ), cls.user == ndb.Key('User', long(user_id) ) ).get()
+        return bool(dislike)
+
+    @classmethod
+    def get_by_post_user(cls, post_id, user_id):
+        dislike = cls.query( cls.post == ndb.Key('Post', long(post_id) ), cls.user == ndb.Key('User', long(user_id) ) ).get()
+        return dislike

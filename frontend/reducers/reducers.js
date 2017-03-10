@@ -28,6 +28,13 @@ import {
   postCommentIndexReducer
 } from './Comments'
 
+import {
+  likeNewReducer,
+  likeDeleteReducer,
+  dislikeNewReducer,
+  dislikeDeleteReducer
+} from './LikesDislikes'
+
 
 const currentUserReducer = reduceReducers(
   userNewReducer,

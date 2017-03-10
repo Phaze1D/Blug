@@ -31,8 +31,8 @@ def init_api_routes(app):
 
     likeCon = LikesController()
     app.add_url_rule('/api/post/<post_id>/like', 'post_liked', view_func=likeCon.create, methods=['POST'])
-    app.add_url_rule('/api/like/<like_id>', 'like_delete', view_func=likeCon.delete, methods=['DELETE'])
+    app.add_url_rule('/api/post/<post_id>/like', 'like_delete', view_func=likeCon.delete, methods=['DELETE'])
 
     dislikeCon = DislikesController()
     app.add_url_rule('/api/post/<post_id>/dislike', 'post_disliked', view_func=dislikeCon.create, methods=['POST'])
-    app.add_url_rule('/api/dislike/<dislike_id>', 'dislike_delete', view_func=dislikeCon.delete, methods=['DELETE'])
+    app.add_url_rule('/api/post/<post_id>/dislike', 'dislike_delete', view_func=dislikeCon.delete, methods=['DELETE'])

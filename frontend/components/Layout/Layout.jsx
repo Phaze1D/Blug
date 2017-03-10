@@ -33,10 +33,6 @@ export default class Layout extends React.Component{
           open={this.state.searchOpen}
           onRequestChange={this.toggleSearch.bind(this)}/>
 
-        <div className='content'>
-          {this.props.children}
-        </div>
-
         <header className='layout-bar'>
           <IconButton className='menu-button'>
             <Menu/>
@@ -49,13 +45,13 @@ export default class Layout extends React.Component{
           </IconButton>
         </header>
 
+        <div className='content'>
+          {this.props.children}
+        </div>
 
         <FloatingActionButton className='fab' secondary={true} onTouchTap={this.props.onRequestNew}>
           <ContentAdd />
         </FloatingActionButton>
-
-
-
       </main>
     )
   }

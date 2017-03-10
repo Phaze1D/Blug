@@ -14,6 +14,10 @@ export const SESSION_VERIFY      = 'SESSION_VERIFY'
 export const RESET_ERRORS        = 'RESET_ERRORS'
 export const ADD_NEW_POST        = 'ADD_NEW_POST'
 export const ADD_UPDATE_POST     = 'ADD_UPDATE_POST'
+export const LIKE_NEW            = 'LIKE_NEW'
+export const LIKE_DELETE         = 'LIKE_DELETE'
+export const DISLIKE_NEW         = 'DISLIKE_NEW'
+export const DISLIKE_DELETE      = 'DISLIKE_DELETE'
 
 
 

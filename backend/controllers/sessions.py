@@ -10,7 +10,6 @@ import time
 class SessionsController():
 
     def get(self):
-        # time.sleep(5)
         if is_login():
             user = User.get_by_id(current_user_id())
             return jsonify(**user.to_safe_dict())
