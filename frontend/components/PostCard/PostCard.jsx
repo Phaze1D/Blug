@@ -6,8 +6,10 @@ import IconButton from 'material-ui/IconButton'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 import UpVote from 'material-ui/svg-icons/action/thumb-up'
 import DownVote from 'material-ui/svg-icons/action/thumb-down'
+import Delete from 'material-ui/svg-icons/action/delete'
 import Edit from 'material-ui/svg-icons/image/edit'
 import Comments from 'material-ui/svg-icons/communication/comment'
+import classnames from 'classnames'
 import { hashHistory } from 'react-router'
 import { connect } from 'react-redux'
 import { likeNew, likeDelete, dislikeNew, dislikeDelete } from '../../actions/LikesDislikes'
@@ -15,7 +17,8 @@ import { likeNew, likeDelete, dislikeNew, dislikeDelete } from '../../actions/Li
 
 @connect( (store) => {
   return {
-    currentUser: store.currentUser
+    like: store.like,
+    dislike: store.dislike
   }
 })
 export default class PostCard extends React.Component{
@@ -72,7 +75,12 @@ export default class PostCard extends React.Component{
       isOwner
     } = this.props.post
 
+    let fetching = this.props.like.fetching || this.props.dislike.fetching
+
     let date = moment(created, 'ddd, DD MMM YYYY HH:mm:ss zzz')
+
+    const dcls = classnames({'dislike': this.state.disliked})
+    const lcls = classnames({'like': this.state.liked})
 
     return(
       <article className='card post-card'>
@@ -88,6 +96,12 @@ export default class PostCard extends React.Component{
                  primaryText="Edit"
                  leftIcon={<Edit />}
                  onTouchTap={this.handleEdit.bind(this)}/>
+
+               <MenuItem
+                 primaryText="Delete"
+                 leftIcon={<Delete />}
+                 onTouchTap={null}/>
+
              </IconMenu>
           </div>
         }
@@ -107,13 +121,13 @@ export default class PostCard extends React.Component{
 
           <section className='icons'>
             <form id='upvote' onSubmit={this.handleLike.bind(this)}>
-              <IconButton type='submit'><UpVote /></IconButton>
+              <IconButton className={lcls} type='submit' disabled={fetching}><UpVote /></IconButton>
               <input type='hidden' value={id}/>
             </form>
             <span>{likes + this.state.vl}</span>
 
             <form id='downvote' onSubmit={this.handleDislike.bind(this)}>
-              <IconButton type='submit'><DownVote/></IconButton>
+              <IconButton className={dcls} type='submit' disabled={fetching}><DownVote/></IconButton>
               <input type='hidden' value={id}/>
             </form>
             <span>{dislikes + this.state.vd}</span>

@@ -5,16 +5,22 @@ import * as types from '../actions/ActionTypes'
 export const likeNewReducer = (state={}, action) => {
   switch (action.type) {
     case `${types.LIKE_NEW}_LOADING`:
-
-      break;
+      return {
+        ...state,
+        fetching: true
+      }
 
     case `${types.LIKE_NEW}_SUCCESS`:
-
-      break;
+      return {
+        ...state,
+        fetching: false
+      }
 
     case `${types.LIKE_NEW}_ERROR`:
-
-      break;
+      return {
+        ...state,
+        fetching: false
+      }
 
     default: return state
   }
@@ -23,16 +29,22 @@ export const likeNewReducer = (state={}, action) => {
 export const likeDeleteReducer = (state={}, action) => {
   switch (action.type) {
     case `${types.LIKE_DELETE}_LOADING`:
-
-      break;
+      return {
+        ...state,
+        fetching: true
+      }
 
     case `${types.LIKE_DELETE}_SUCCESS`:
-
-      break;
+      return {
+        ...state,
+        fetching: false
+      }
 
     case `${types.LIKE_DELETE}_ERROR`:
-
-      break;
+      return {
+        ...state,
+        fetching: false
+      }
 
     default: return state
   }
@@ -41,16 +53,22 @@ export const likeDeleteReducer = (state={}, action) => {
 export const dislikeNewReducer = (state={}, action) => {
   switch (action.type) {
     case `${types.DISLIKE_NEW}_LOADING`:
-
-      break;
+      return {
+        ...state,
+        fetching: true
+      }
 
     case `${types.DISLIKE_NEW}_SUCCESS`:
-
-      break;
+      return {
+        ...state,
+        fetching: false
+      }
 
     case `${types.DISLIKE_NEW}_ERROR`:
-
-      break;
+      return {
+        ...state,
+        fetching: false
+      }
 
     default: return state
   }
@@ -59,16 +77,22 @@ export const dislikeNewReducer = (state={}, action) => {
 export const dislikeDeleteReducer = (state={}, action) => {
   switch (action.type) {
     case `${types.DISLIKE_DELETE}_LOADING`:
-
-      break;
+      return {
+        ...state,
+        fetching: true
+      }
 
     case `${types.DISLIKE_DELETE}_SUCCESS`:
-
-      break;
+      return {
+        ...state,
+        fetching: false
+      }
 
     case `${types.DISLIKE_DELETE}_ERROR`:
-
-      break;
+      return {
+        ...state,
+        fetching: false
+      }
 
     default: return state
   }

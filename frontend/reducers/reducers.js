@@ -69,11 +69,23 @@ const commentsReducer = reduceReducers(
   postCommentIndexReducer
 )
 
+const likeReducer = reduceReducers(
+  likeNewReducer,
+  likeDeleteReducer
+)
+
+const dislikeReducer = reduceReducers(
+  dislikeNewReducer,
+  dislikeDeleteReducer
+)
+
 export default combineReducers({
   currentUser: currentUserReducer,
   user: userReducer,
   post: postReducer,
   posts: postsReducer,
   comment: commentReducer,
-  comments: commentsReducer
+  comments: commentsReducer,
+  like: likeReducer,
+  dislike: dislikeReducer
 })

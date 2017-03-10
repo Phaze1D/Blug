@@ -58,10 +58,10 @@ export default class Layout extends React.Component{
 }
 
 
-<nav className='nav-bar'>
-  <ul>
-    <li className='active'><Link to='/posts?page=top'>Top</Link></li>
-    <li><Link to='/posts?page=trending'>Trending</Link></li>
-    <li><Link to='/posts?page=recent'>Recent</Link></li>
-  </ul>
-</nav>
+// <nav className='nav-bar'>
+//   <ul>
+//     <li className='active'><Link to='/posts?page=top'>Top</Link></li>
+//     <li><Link to='/posts?page=trending'>Trending</Link></li>
+//     <li><Link to='/posts?page=recent'>Recent</Link></li>
+//   </ul>
+// </nav>

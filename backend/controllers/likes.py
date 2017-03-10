@@ -19,6 +19,9 @@ class LikesController():
             post=ndb.Key('Post', long(post_id)),
             user=ndb.Key('User', long( current_user_id() ) ),
         )
+
+        logging.warning(Like.get_by_post_user(like.post.id(), like.user.id()))
+
         if like.is_valid() and not Like.already_exist(like.post.id(), like.user.id()):
             post = Post.get_by_id(long(post_id))
             post.likes = post.likes + 1

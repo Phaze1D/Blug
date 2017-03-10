@@ -21,10 +21,20 @@ class Like(ndb.Model):
 
     @classmethod
     def already_exist(cls, post_id, user_id):
-        like = cls.query( cls.post == ndb.Key('Post', long(post_id) ), cls.user == ndb.Key('User', long(user_id) ) ).get()
+        like = cls.query(
+            ndb.AND(
+                cls.post == ndb.Key('Post', long(post_id) ),
+                    cls.user == ndb.Key('User', long(user_id) )
+                )
+            ).get()
         return bool(like)
 
     @classmethod
     def get_by_post_user(cls, post_id, user_id):
-        like = cls.query( cls.post == ndb.Key('Post', long(post_id) ), cls.user == ndb.Key('User', long(user_id) ) ).get()
+        like = cls.query(
+            ndb.AND(
+                cls.post == ndb.Key('Post', long(post_id) ),
+                    cls.user == ndb.Key('User', long(user_id) )
+                )
+            ).get()
         return like
