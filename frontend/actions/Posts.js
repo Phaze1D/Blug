@@ -4,7 +4,9 @@ import {
   POST_EDIT,
   POST_GET,
   USER_POSTS_INDEX,
-  POSTS_INDEX
+  POSTS_INDEX,
+  ADD_NEW_POST,
+  ADD_UPDATE_POST
 } from './ActionTypes'
 
 
@@ -20,14 +22,12 @@ export const postNew = (title='', content='') => {
 }
 
 export const postEdit = (post_id, title, content) => {
+  let data = new FormData();
+  data.append('title', title)
+  data.append('content', content)
   return {
     type: POST_EDIT,
-    payload: axios.put(`/api/post/${post_id}`, {
-      data: {
-        title: title,
-        content: content,
-      }
-    })
+    payload: axios.put(`/api/post/${post_id}`, data),
   }
 }
 
@@ -57,5 +57,20 @@ export const postsIndex = (cursor=null) => {
         cursor: cursor
       }
     })
+  }
+}
+
+
+export const addNewPost = (post) => {
+  return {
+    type: ADD_NEW_POST,
+    payload: post
+  }
+}
+
+export const addUpdatePost = (post, index) => {
+  return {
+    type: ADD_UPDATE_POST,
+    payload: {post: post, index: index}
   }
 }

@@ -7,37 +7,19 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import ActionSearch from 'material-ui/svg-icons/action/search'
 import ContentClear from 'material-ui/svg-icons/content/clear'
+import Menu from 'material-ui/svg-icons/navigation/menu'
 import Search from '../Search/Search'
-import PostForm from '../PostForm/PostForm'
-import { verify } from '../../actions/Sessions'
 
 
-@connect((store) => {
-  return {
-    currentUser: store.currentUser
-  }
-})
+
 export default class Layout extends React.Component{
   constructor(props){
     super(props)
-    this.state = {searchOpen: false, rightOpen: false}
+    this.state = {searchOpen: false}
   }
 
   toggleSearch(event){
     this.setState({searchOpen: !this.state.searchOpen})
-  }
-
-  toggleRightSide(event){
-    this.props.dispatch(verify())
-    .then(this.onVerified.bind(this), this.onVerifiedError.bind(this))
-  }
-
-  onVerified(){
-    this.setState({rightOpen: true})
-  }
-
-  onVerifiedError(){
-    hashHistory.push('/login');
   }
 
   render(){
@@ -51,16 +33,16 @@ export default class Layout extends React.Component{
           open={this.state.searchOpen}
           onRequestChange={this.toggleSearch.bind(this)}/>
 
-        <header className='layout-bar'>
-          <img className='logo' src='/static/logo.svg'></img>
+        <div className='content'>
+          {this.props.children}
+        </div>
 
-          <nav className='nav-bar'>
-            <ul>
-              <li className='active'><Link to='/posts?page=top'>Top</Link></li>
-              <li><Link to='/posts?page=trending'>Trending</Link></li>
-              <li><Link to='/posts?page=recent'>Recent</Link></li>
-            </ul>
-          </nav>
+        <header className='layout-bar'>
+          <IconButton className='menu-button'>
+            <Menu/>
+          </IconButton>
+
+          <h1>Blug</h1>
 
           <IconButton className='search-button' onTouchTap={this.toggleSearch.bind(this)}>
             <ActionSearch/>
@@ -68,21 +50,22 @@ export default class Layout extends React.Component{
         </header>
 
 
-        <FloatingActionButton className='fab' secondary={true} onTouchTap={this.toggleRightSide.bind(this)}>
+        <FloatingActionButton className='fab' secondary={true} onTouchTap={this.props.onRequestNew}>
           <ContentAdd />
         </FloatingActionButton>
 
-        <PostForm
-          open={this.state.rightOpen}
-          title='New Post'
-          currentUser={this.props.currentUser}
-          onRequestChange={() => this.setState({rightOpen: false})}/>
 
-        <div className='content'>
-          {this.props.children}
-        </div>
 
       </main>
     )
   }
 }
+
+
+<nav className='nav-bar'>
+  <ul>
+    <li className='active'><Link to='/posts?page=top'>Top</Link></li>
+    <li><Link to='/posts?page=trending'>Trending</Link></li>
+    <li><Link to='/posts?page=recent'>Recent</Link></li>
+  </ul>
+</nav>

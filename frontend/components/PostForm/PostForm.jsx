@@ -8,7 +8,7 @@ import ContentClear from 'material-ui/svg-icons/content/clear'
 import ActionDone from 'material-ui/svg-icons/action/done'
 import classnames from 'classnames'
 import { connect } from 'react-redux'
-import { postNew, postEdit } from '../../actions/Posts'
+import { postNew, postEdit, addNewPost, addUpdatePost } from '../../actions/Posts'
 import { resetErrors } from '../../actions/ActionTypes'
 
 
@@ -33,11 +33,23 @@ export default class PostForm extends React.Component{
     event.preventDefault()
     let title = document.getElementById('title').value
     let content = document.getElementById('content').value
-    this.props.dispatch(postNew(title, content))
-    .then(this.onPostSuccess.bind(this), this.onPostError.bind(this))
+
+    if(this.props.updateIndex >= 0){
+      this.props.dispatch(postEdit(this.props.post.post.id, title, content))
+      .then(this.onPostSuccess.bind(this), this.onPostError.bind(this))
+    }else{
+      this.props.dispatch(postNew(title, content))
+      .then(this.onPostSuccess.bind(this), this.onPostError.bind(this))
+    }
+
   }
 
   onPostSuccess(){
+    if(this.props.updateIndex >= 0){
+      this.props.dispatch(addUpdatePost(this.props.post.post, this.props.updateIndex))
+    }else{
+      this.props.dispatch(addNewPost(this.props.post.post))
+    }
     this.props.onRequestChange()
   }
 
@@ -51,12 +63,9 @@ export default class PostForm extends React.Component{
 
   render(){
     const {
-      loggedIn
-    } = this.props.currentUser
-
-    const {
       fetching,
-      errors
+      errors,
+      post
     } = this.props.post
 
     const asideClasses = classnames('side-view', {'open': this.props.open})
@@ -73,7 +82,7 @@ export default class PostForm extends React.Component{
                   <ContentClear/>
                 </IconButton>
 
-                <h3>{this.props.title}</h3>
+                <h3>{this.props.updateIndex >= 0 ? 'Update Post' : 'New Post'}</h3>
 
                 <IconButton className='form-button right' type='submit' disabled={fetching}>
                   <ActionDone/>
@@ -86,7 +95,11 @@ export default class PostForm extends React.Component{
                 </div>
               }
 
-              {this.props.open ? <FormFields errors={errors} onFocus={this.handleOnFocus.bind(this)}/> : null}
+              {this.props.open ?
+                <FormFields
+                  post={post}
+                  errors={errors}
+                  onFocus={this.handleOnFocus.bind(this)}/> : null}
 
             </form>
           </aside>
@@ -100,6 +113,8 @@ export default class PostForm extends React.Component{
 const FormFields = (props) => {
   let titleError = props.errors && props.errors.title ? props.errors.title[0] : null
   let contentError = props.errors && props.errors.content ? props.errors.content[0] : null
+  let title = props.post ? props.post.title : null
+  let content = props.post ? props.post.content : null
   return (
     <div className='form-fields'>
       <div className='input-wrapper'>
@@ -112,6 +127,7 @@ const FormFields = (props) => {
           fullWidth={true}
           errorText={titleError}
           onFocus={props.onFocus}
+          defaultValue={title}
           autoComplete='off'/>
       </div>
 
@@ -125,6 +141,7 @@ const FormFields = (props) => {
           multiLine={true}
           errorText={contentError}
           onFocus={props.onFocus}
+          defaultValue={content}
           autoComplete='off'/>
       </div>
     </div>

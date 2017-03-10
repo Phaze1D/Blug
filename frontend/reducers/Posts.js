@@ -38,6 +38,12 @@ export const postNewReducer = (state={}, action) => {
         errors: null
       }
 
+    case `${types.SESSION_VERIFY}_SUCCESS`:
+      return {
+        ...state,
+        post: null
+      }
+
     default: return state
   }
 }
@@ -45,16 +51,30 @@ export const postNewReducer = (state={}, action) => {
 export const postEditReducer = (state={}, action) => {
   switch (action.type) {
     case `${types.POST_EDIT}_LOADING`:
-
-      break;
+      return {
+        ...state,
+        fetching: true,
+        success: false,
+        errors: null
+      }
 
     case `${types.POST_EDIT}_SUCCESS`:
-
-      break;
+      return {
+        ...state,
+        fetching: false,
+        success: true,
+        post: action.payload.data,
+        errors: null
+      }
 
     case `${types.POST_EDIT}_ERROR`:
+      return {
+        ...state,
+        fetching: false,
+        success: false,
+        errors: action.payload.response.data
+      }
 
-      break;
     default: return state
   }
 }
@@ -62,19 +82,33 @@ export const postEditReducer = (state={}, action) => {
 export const postGetReducer = (state={}, action) => {
   switch (action.type) {
     case `${types.POST_GET}_LOADING`:
-
-      break;
+      return {
+        ...state,
+        fetching: true,
+        post: null,
+        errors: null
+      }
 
     case `${types.POST_GET}_SUCCESS`:
-
-      break;
+      return {
+        ...state,
+        fetching: false,
+        post: action.payload.data,
+        errors: null
+      }
 
     case `${types.POST_GET}_ERROR`:
+      return {
+        ...state,
+        fetching: false,
+        post: null,
+        errors: action.payload.message
+      }
 
-      break;
     default: return state
   }
 }
+
 
 export const userPostsIndexReducer = (state=[], action) => {
   switch (action.type) {
@@ -120,5 +154,35 @@ export const postsIndexReducer = (state=[], action) => {
       }
 
     default: return state
+  }
+}
+
+
+export const addNewPostReducer = (state={}, action) => {
+
+  switch (action.type) {
+    case types.ADD_NEW_POST:
+      return {
+        ...state,
+        posts: [action.payload].concat(state.posts)
+      }
+
+    default: return state
+
+  }
+}
+
+export const addUpdatePostReducer = (state={}, action) => {
+  switch (action.type) {
+    case types.ADD_UPDATE_POST:
+      let newState = {
+        ...state,
+        posts: [].concat(state.posts)
+      }
+
+      newState.posts[action.payload.index] = action.payload.post
+      return newState
+    default: return state
+
   }
 }

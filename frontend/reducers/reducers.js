@@ -10,8 +10,10 @@ import {
   postNewReducer,
   postEditReducer,
   postGetReducer,
+  addNewPostReducer,
   userPostsIndexReducer,
-  postsIndexReducer
+  postsIndexReducer,
+  addUpdatePostReducer
  } from './Posts'
 
 import {
@@ -41,12 +43,14 @@ const userReducer = reduceReducers(
 const postReducer = reduceReducers(
   postNewReducer,
   postEditReducer,
-  postGetReducer,
+  postGetReducer
 )
 
 const postsReducer = reduceReducers(
   userPostsIndexReducer,
-  postsIndexReducer
+  postsIndexReducer,
+  addNewPostReducer,
+  addUpdatePostReducer
 )
 
 const commentReducer = reduceReducers(

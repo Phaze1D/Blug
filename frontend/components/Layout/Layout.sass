@@ -8,12 +8,19 @@ main
   display: flex
   align-items: center
   position: fixed
+  z-index: $z-index-high
   top: 0
   width: 100%
   height: 56px
-  background-color: $white
+  background-color: $color-primary
   border-bottom: 1px solid $grey-200
   padding: 0 16px
+
+  h1
+    flex-grow: 1
+    text-align: center
+    color: white
+    margin: 0
 
 
 .logo
@@ -22,15 +29,18 @@ main
 
 
 .search-button
-  +header-button-dark()
+  +header-button-light()
   margin: 0 0 0 auto !important
+
+.menu-button
+  +header-button-light()
 
 
 .nav-bar
   margin-left: auto
   max-width: 1000px
   height: 100%
-  color: $color-primary
+  color: $white
 
   ul
     list-style: none
@@ -57,15 +67,29 @@ main
     height: 100%
     width: 100%
 
-
 .fab
   position: fixed
+  z-index: $z-index-high
   bottom: 16px
   right: 16px
 
+
+.content
+  display: flex
+  flex-direction: column
+  align-items: center
+  padding: 72px 16px
+
+
+
 @media screen and (min-width: $layout-breakpoint-sm)
+  .content
+    padding: 80px 16px
+
+
   .layout-bar
     height: 64px
+
 
   .fab
     bottom: 26px

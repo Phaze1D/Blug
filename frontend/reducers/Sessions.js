@@ -7,6 +7,7 @@ export const loginReducer = (state={}, action) => {
         ...state,
         fetching: true,
         loggedIn: false,
+        currentUser: null,
         errors: null
       }
 
@@ -15,6 +16,7 @@ export const loginReducer = (state={}, action) => {
         ...state,
         fetching: false,
         loggedIn: true,
+        currentUser: action.payload.data,
         errors: null
       }
 
@@ -23,6 +25,7 @@ export const loginReducer = (state={}, action) => {
         ...state,
         fetching: false,
         loggedIn: false,
+        currentUser: null,
         errors: action.payload.response.data
       }
 
@@ -60,6 +63,7 @@ export const verifyReducer = (state={}, action) => {
       return {
         ...state,
         verifing: true,
+        currentUser: null,
         loggedIn: false
       }
 
@@ -67,6 +71,7 @@ export const verifyReducer = (state={}, action) => {
       return {
         ...state,
         verifing: false,
+        currentUser: action.payload.data,
         loggedIn: true
       }
 
@@ -74,10 +79,11 @@ export const verifyReducer = (state={}, action) => {
       return {
         ...state,
         verifing: false,
+        currentUser: null,
         loggedIn: false
       }
 
-  
+
     default: return state
   }
 }

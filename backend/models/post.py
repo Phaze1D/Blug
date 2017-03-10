@@ -51,7 +51,9 @@ class Post(ndb.Model):
         for post in posts:
             pd = post.to_dict()
             pd['id'] = post.key.id()
-            pd['user'] = pd['user'].id()
+            user_key = pd['user']
+            pd['isOwner'] = current_user_id() == user_key.id()
+            pd['user'] = user_key.get().username
             results['posts'].append(pd)
 
         return results

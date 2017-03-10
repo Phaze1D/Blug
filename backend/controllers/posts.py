@@ -18,7 +18,16 @@ class PostsController():
         return jsonify(**json_results)
 
     def get(self, post_id):
-        pass
+        post = Post.get_by_id(long(post_id))
+        if post:
+            post_dict = post.to_dict()
+            post_dict['id'] = post.key.id()
+            user_key = post_dict['user']
+            post_dict['isOwner'] = current_user_id() == user_key.id()
+            post_dict['user'] = user_key.get().username
+            return jsonify(**post_dict)
+        else:
+            raise OwnerException(message='unauth data')
 
     def new(self):
         pass
@@ -36,7 +45,10 @@ class PostsController():
             key = post.put()
             post_dict = key.get().to_dict()
             post_dict['id'] = key.id()
-            post_dict['user'] = post_dict['user'].id()
+            user_key = post_dict['user']
+            post_dict['isOwner'] = current_user_id() == user_key.id()
+            post_dict['user'] = user_key.get().username
+
             return jsonify(**post_dict)
         else:
             raise FormException(message='invalid post data', payload=post.errors())
@@ -58,7 +70,9 @@ class PostsController():
                 key = post.put()
                 post_dict = key.get().to_dict()
                 post_dict['id'] = key.id()
-                post_dict['user'] = post_dict['user'].id()
+                user_key = post_dict['user']
+                post_dict['isOwner'] = current_user_id() == user_key.id()
+                post_dict['user'] = user_key.get().username
                 return jsonify(**post_dict)
             else:
                 raise FormException(message='invalid post data', payload=post.errors())

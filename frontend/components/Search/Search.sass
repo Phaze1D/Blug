@@ -5,7 +5,7 @@
   left: 0
   width: 100%
   height: 56px
-  background-color: $color-primary
+  background-color: $white
   z-index: $z-index-highest
   display: flex
   justify-content: center
@@ -13,9 +13,6 @@
 
   &.window
     position: fixed
-
-  div
-    color: rgba(255,255,255, 0.7) !important
 
 
 .appear-search
@@ -58,15 +55,14 @@
   margin: 0 5px 0 0px !important
 
   svg
-    fill: white!important
+    fill: $color-primary !important
 
 
 .msearch-input
   flex-grow: 1
 
   input
-    font-size: 16 !important
-    color: white !important
+    font-size: 1em !important
 
 
 .msearch-overlay
@@ -76,7 +72,7 @@
 
 @media(min-width: $layout-breakpoint-sm)
   .msearch-input .input
-    font-size: 18px !important
+    font-size: 1.2em !important
 
 
   .msearch-back
