@@ -39,10 +39,12 @@ class Post(ndb.Model):
         if user_id:
             posts, next_cursor, more = cls \
             .query(cls.user == ndb.Key('User', long(user_id))) \
+            .order(-cls.created) \
             .fetch_page(per_page, start_cursor=cursor)
         else:
             posts, next_cursor, more = cls \
             .query() \
+            .order(-cls.created) \
             .fetch_page(per_page, start_cursor=cursor)
 
         nc = next_cursor.urlsafe() if bool(next_cursor) else ''

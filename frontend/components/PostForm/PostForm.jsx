@@ -84,7 +84,7 @@ export default class PostForm extends React.Component{
 
                 <h3>{this.props.updateIndex >= 0 ? 'Update Post' : 'New Post'}</h3>
 
-                <IconButton className='form-button right' type='submit' disabled={fetching}>
+                <IconButton className='form-button right' type='submit' disabled={fetching || !this.props.open}>
                   <ActionDone/>
                 </IconButton>
               </header>
