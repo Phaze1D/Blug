@@ -18,8 +18,6 @@ class SessionsController():
 
         raise LoginException('not logged in')
 
-    def new(self):
-        pass
 
     def create(self):
         if is_login():

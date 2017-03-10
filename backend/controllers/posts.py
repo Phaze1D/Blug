@@ -29,8 +29,6 @@ class PostsController():
         else:
             raise OwnerException(message='unauth data')
 
-    def new(self):
-        pass
 
     def create(self):
         if not is_login():
@@ -53,9 +51,6 @@ class PostsController():
         else:
             raise FormException(message='invalid post data', payload=post.errors())
 
-
-    def edit(self, post_id):
-        pass
 
     def update(self, post_id):
         if not is_login():

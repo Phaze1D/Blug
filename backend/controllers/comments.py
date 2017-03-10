@@ -18,9 +18,6 @@ class CommentsController():
     def get(self):
         pass
 
-    def new(self):
-        pass
-
     def create(self, post_id):
         if not is_login():
             raise LoginException(message='not logged in')
@@ -40,10 +37,6 @@ class CommentsController():
         else:
             raise FormException(message='invalid comment data', payload=comment.errors())
 
-
-
-    def edit(self, comment_id):
-        pass
 
     def update(self, comment_id):
         if not is_login():

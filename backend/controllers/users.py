@@ -9,14 +9,8 @@ import logging
 
 class UsersController():
 
-    def index(self):
-        pass
-
     def get(self, username):
         return jsonify(**User.get_by_username( username ).to_safe_dict())
-
-    def new(self):
-        pass
 
     def create(self):
         # time.sleep(5)
@@ -34,13 +28,3 @@ class UsersController():
             return login(key)
         else:
             raise FormException(message='invalid user data', payload=user.errors())
-
-
-    def edit(self, user_id):
-        pass
-
-    def update(self, user_id):
-        pass
-
-    def delete(self, user_id):
-        pass
