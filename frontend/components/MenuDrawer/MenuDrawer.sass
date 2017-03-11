@@ -1,0 +1,16 @@
+.menu-drawer
+  +shadow-3dp()
+  position: absolute
+  top: 0
+  left: 0
+  width: 256px
+  height: 100%
+  background-color: white
+  transform: translate(-100%, 0)
+  transition-timing-function: $animation-curve-default
+  transition-delay: $animation-delay
+  transition-duration: $animation-duration
+  transition-property: transform
+
+  &.open
+    transform: translate(0,0)

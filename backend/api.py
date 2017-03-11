@@ -16,6 +16,7 @@ def init_api_routes(app):
     app.add_url_rule('/api/post/create', 'posts_create', view_func=postCon.create, methods=['POST'])
     app.add_url_rule('/api/post/<post_id>', 'posts_update', view_func=postCon.update, methods=['PUT'])
     app.add_url_rule('/api/post/<post_id>', 'posts_get', view_func=postCon.get, methods=['GET'])
+    app.add_url_rule('/api/post/<post_id>', 'posts_delete', view_func=postCon.delete, methods=['DELETE'])
     app.add_url_rule('/api/user/<user_id>/posts', 'user_posts_index', view_func=postCon.index, methods=['GET'])
     app.add_url_rule('/api/posts', 'posts_index', view_func=postCon.index, methods=['GET'])
 

@@ -13,6 +13,7 @@ import classnames from 'classnames'
 import { hashHistory } from 'react-router'
 import { connect } from 'react-redux'
 import { likeNew, likeDelete, dislikeNew, dislikeDelete } from '../../actions/LikesDislikes'
+import { postDelete, removePost } from '../../actions/Posts'
 
 
 @connect( (store) => {
@@ -52,7 +53,7 @@ export default class PostCard extends React.Component{
 
   onLiked(){
     this.setState({liked: true, vl: this.state.vl + 1})
-
+    
     this.props.dispatch( dislikeDelete(this.props.post.id) )
     .then(() => this.setState({disliked: false, vd: this.state.vd - 1}))
   }
@@ -61,6 +62,15 @@ export default class PostCard extends React.Component{
     if(payload.response.status === 412){
       hashHistory.push('/login')
     }
+  }
+
+  handleDelete(event){
+    this.props.dispatch(postDelete(this.props.post.id))
+    .then(this.onDeleted.bind(this))
+  }
+
+  onDeleted(){
+    this.props.dispatch(removePost(this.props.index))
   }
 
   render(){
@@ -100,7 +110,7 @@ export default class PostCard extends React.Component{
                <MenuItem
                  primaryText="Delete"
                  leftIcon={<Delete />}
-                 onTouchTap={null}/>
+                 onTouchTap={this.handleDelete.bind(this)}/>
 
              </IconMenu>
           </div>

@@ -43,16 +43,28 @@ export const loginReducer = (state={}, action) => {
 export const logoutReducer = (state={}, action) => {
   switch (action.type) {
     case `${types.LOGOUT}_LOADING`:
-
-      break;
+      return{
+        ...state,
+        fetching: true,
+        errors: null
+      }
 
     case `${types.LOGOUT}_SUCCESS`:
-
-      break;
+      return{
+        ...state,
+        fetching: false,
+        loggedIn: false,
+        currentUser: null,
+        errors: null
+      }
 
     case `${types.LOGOUT}_ERROR`:
+      return{
+        ...state,
+        fetching: false,
+        errors: null
+      }
 
-      break;
     default: return state
   }
 }

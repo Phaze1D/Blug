@@ -3,10 +3,12 @@ import {
   POST_NEW,
   POST_EDIT,
   POST_GET,
+  POST_DELETE,
   USER_POSTS_INDEX,
   POSTS_INDEX,
   ADD_NEW_POST,
-  ADD_UPDATE_POST
+  ADD_UPDATE_POST,
+  REMOVE_POST
 } from './ActionTypes'
 
 
@@ -35,6 +37,13 @@ export const postGet = (post_id) => {
   return {
     type: POST_GET,
     payload: axios.get(`/api/post/${post_id}`)
+  }
+}
+
+export const postDelete = (post_id) => {
+  return {
+    type: POST_DELETE,
+    payload: axios.delete(`/api/post/${post_id}`)
   }
 }
 
@@ -72,5 +81,12 @@ export const addUpdatePost = (post, index) => {
   return {
     type: ADD_UPDATE_POST,
     payload: {post: post, index: index}
+  }
+}
+
+export const removePost = (index) => {
+  return {
+    type: REMOVE_POST,
+    payload: {index: index}
   }
 }

@@ -75,4 +75,12 @@ class PostsController():
         raise OwnerException(message='unauth data')
 
     def delete(self, post_id):
-        pass
+        if not is_login():
+            raise LoginException(message='not logged in')
+
+        post = Post.get_by_id(long(post_id))
+        if post and post.user.id() == current_user_id():
+            post.key.delete()
+            return jsonify(deleted=True)
+        else:
+            raise OwnerException(message='unauth data')

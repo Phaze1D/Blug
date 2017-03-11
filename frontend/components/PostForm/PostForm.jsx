@@ -68,7 +68,7 @@ export default class PostForm extends React.Component{
       post
     } = this.props.post
 
-    const asideClasses = classnames('side-view', {'open': this.props.open})
+    const asideClasses = classnames('side-form', {'open': this.props.open})
     const overClasses = classnames('overlay', {'open': this.props.open})
 
     return(

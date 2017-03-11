@@ -40,6 +40,10 @@ export default class Posts extends React.Component{
     hashHistory.push('/login');
   }
 
+  onLogout(){
+    this.props.dispatch(postsIndex())
+  }
+
   handleEdit(id, index){
     this.setState({updateIndex: index})
     this.props.dispatch(resetErrors('POST'))
@@ -73,7 +77,9 @@ export default class Posts extends React.Component{
     )
 
     return (
-      <Layout onRequestNew={this.handleNew.bind(this)}>
+      <Layout
+        onRequestNew={this.handleNew.bind(this)}
+        onRequestLogout={this.onLogout.bind(this)}>
 
         <PostForm
           open={this.state.rightOpen}

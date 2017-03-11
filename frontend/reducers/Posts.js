@@ -109,6 +109,36 @@ export const postGetReducer = (state={}, action) => {
   }
 }
 
+export const postDeleteReducer = (state={}, action) => {
+  switch (action.type) {
+    case `${types.POST_DELETE}_LOADING`:
+      return {
+        ...state,
+        fetching: true,
+        post: null,
+        errors: null
+      }
+
+    case `${types.POST_DELETE}_SUCCESS`:
+      return {
+        ...state,
+        fetching: false,
+        post: null,
+        errors: null
+      }
+
+    case `${types.POST_DELETE}_ERROR`:
+      return {
+        ...state,
+        fetching: false,
+        post: null,
+        errors: action.payload.message
+      }
+
+    default: return state
+  }
+}
+
 
 export const userPostsIndexReducer = (state=[], action) => {
   switch (action.type) {
@@ -181,6 +211,22 @@ export const addUpdatePostReducer = (state={}, action) => {
       }
 
       newState.posts[action.payload.index] = action.payload.post
+      return newState
+    default: return state
+
+  }
+}
+
+
+export const removePostReducer = (state={}, action) => {
+  switch (action.type) {
+    case types.REMOVE_POST:
+      let newPosts = [].concat(state.posts)
+      let newState = {
+        ...state,
+        posts: newPosts
+      }
+      newState.posts.splice(action.payload.index,1)
       return newState
     default: return state
 
