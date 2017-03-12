@@ -7,7 +7,6 @@ from backend.errors.form_exception import FormException
 from backend.errors.login_exception import LoginException
 from backend.errors.owner_exception import OwnerException
 
-import logging
 
 class LikesController():
 
@@ -19,8 +18,6 @@ class LikesController():
             post=ndb.Key('Post', long(post_id)),
             user=ndb.Key('User', long( current_user_id() ) ),
         )
-
-        logging.warning(Like.get_by_post_user(like.post.id(), like.user.id()))
 
         if like.is_valid() and not Like.already_exist(like.post.id(), like.user.id()):
             post = Post.get_by_id(long(post_id))

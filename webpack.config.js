@@ -6,7 +6,8 @@ var CleanWebpackPlugin = require('clean-webpack-plugin');
 var SCRIPTS_PATH = 'backend/static/scripts';
 var TEMPLATES_PATH = 'backend/templates';
 
-module.exports = {
+
+var config = {
   watch: true,
   entry: './frontend/index.jsx',
   output: {
@@ -43,7 +44,6 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin([SCRIPTS_PATH, TEMPLATES_PATH]),
-    // new webpack.optimize.UglifyJsPlugin({ output: { comments: false } }),
     new HtmlWebpackPlugin({
       inject: 'head',
       filename: '../../templates/index.html',
@@ -51,3 +51,11 @@ module.exports = {
     })
   ]
 };
+
+if(process.env.NODE_ENV === 'production'){
+  config.plugins.push(new webpack.optimize.UglifyJsPlugin({ output: { comments: false } }))
+  config.watch = false
+}
+
+
+module.exports = config

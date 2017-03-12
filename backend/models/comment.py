@@ -5,7 +5,6 @@ from backend.models.post import Post
 from backend.models.user import User
 import re
 
-import logging
 
 class Comment(ndb.Model):
     post = ndb.KeyProperty(kind='Post', required=True)

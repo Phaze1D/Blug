@@ -42,7 +42,11 @@ export default class Layout extends React.Component{
 
   handleLogout(event){
     this.setState({menuOpen: false})
-    this.props.dispatch(logout()).then(this.props.onRequestLogout)
+    this.props.dispatch(logout()).then(this.onLogout.bind(this))
+  }
+
+  onLogout(){
+    hashHistory.push('/login')
   }
 
   handleLogin(event){

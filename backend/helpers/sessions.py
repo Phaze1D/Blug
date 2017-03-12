@@ -1,8 +1,7 @@
 from flask import session, current_app, request, make_response, jsonify
 from backend.models.user import User
-
 import hashlib
-import logging
+
 
 def login(userKey, user=None):
     if not bool(user):

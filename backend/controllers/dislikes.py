@@ -8,7 +8,6 @@ from backend.errors.login_exception import LoginException
 from backend.errors.owner_exception import OwnerException
 
 
-import logging
 
 class DislikesController(object):
 

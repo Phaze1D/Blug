@@ -22,11 +22,23 @@ export const REMOVE_POST         = 'REMOVE_POST'
 export const POST_DELETE         = 'POST_DELETE'
 export const SEARCH              = 'SEARCH'
 export const POSTS_NEXT_PAGE     = 'POSTS_NEXT_PAGE'
+export const SET_GLOBAL_ERROR    = 'SET_GLOBAL_ERROR'
 
 
 
 export const resetErrors = (type) => {
   return {
     type: `${RESET_ERRORS}_${type}`
+  }
+}
+
+
+export const setGlobalError = (message, show) => {
+  return {
+    type: SET_GLOBAL_ERROR,
+    payload: {
+      message: message,
+      show: show
+    }
   }
 }

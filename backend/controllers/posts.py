@@ -8,13 +8,10 @@ from backend.errors.form_exception import FormException
 from backend.errors.login_exception import LoginException
 from backend.errors.owner_exception import OwnerException
 
-import logging
-import time
 
 class PostsController():
 
     def index(self, user_id = None):
-        # time.sleep(5)
         json_results = {}
         if user_id:
             json_results = Post.users_with_pages(user_id=user_id, cursor=request.args.get('cursor'))

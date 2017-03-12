@@ -23,5 +23,4 @@ document.addEventListener("DOMContentLoaded", function(event) {
     <Provider store={store}>{routes()}</Provider>,
     document.getElementById('app')
   )
-
 });

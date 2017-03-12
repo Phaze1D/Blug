@@ -7,8 +7,6 @@ from backend.errors.form_exception import FormException
 from backend.errors.login_exception import LoginException
 from backend.errors.owner_exception import OwnerException
 
-import logging
-
 
 class CommentsController():
     def index(self, post_id):

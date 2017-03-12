@@ -4,8 +4,7 @@ from backend.models.user import User
 from backend.errors.form_exception import FormException
 from backend.errors.login_exception import LoginException
 
-import logging
-import time
+
 
 class SessionsController():
 

@@ -5,8 +5,6 @@ from backend.helpers.sessions import current_user_id
 from backend.models.user import User
 import re
 
-import logging
-
 class Post(ndb.Model):
     user = ndb.KeyProperty(kind='User', required=True)
     username = ndb.StringProperty(required=True)
@@ -141,7 +139,6 @@ class Post(ndb.Model):
 
 
 def pieces(string):
-    logging.warning('sdfds')
     pieces = []
 
     for word in string.split():

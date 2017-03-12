@@ -4,8 +4,6 @@ from backend.helpers.sessions import login, is_login, current_user_id
 from backend.errors.form_exception import FormException
 from backend.errors.login_exception import LoginException
 
-import time
-import logging
 
 class UsersController():
 
@@ -13,7 +11,6 @@ class UsersController():
         return jsonify(**User.get_by_username( username ).to_safe_dict())
 
     def create(self):
-        # time.sleep(5)
         if is_login():
             raise LoginException('already logged in', status_code=301)
 

@@ -11,10 +11,9 @@ libraries:
   version: "2.6"
 - name: markupsafe
   version: "0.15"
+  
 skip_files: |
     ^(.*/)?(
-    (app\.yaml)|
-    (index\.yaml)|
     (\..*)|
     (.*\.pyc)|
     (.*\.bat)|

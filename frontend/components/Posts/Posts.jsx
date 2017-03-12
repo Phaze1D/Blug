@@ -42,10 +42,6 @@ export default class Posts extends React.Component{
     hashHistory.push('/login');
   }
 
-  onLogout(){
-    this.props.dispatch(postsIndex())
-  }
-
   handleEdit(id, index){
     this.setState({updateIndex: index})
     this.props.dispatch(resetErrors('POST'))
@@ -57,7 +53,8 @@ export default class Posts extends React.Component{
     if(this.props.post.post.isOwner){
       this.setState({rightOpen: true})
     }else{
-        hashHistory.push('/login');
+      
+      hashHistory.push('/login');
     }
   }
 
@@ -99,7 +96,6 @@ export default class Posts extends React.Component{
     return (
       <Layout
         onRequestNew={this.handleNew.bind(this)}
-        onRequestLogout={this.onLogout.bind(this)}
         onRequestSearchSubmit={this.handleSearchSubmit.bind(this)}
         onRequestSearchClear={this.handleSearchClear.bind(this)}>
 

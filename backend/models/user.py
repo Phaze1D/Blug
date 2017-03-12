@@ -5,7 +5,6 @@ import hashlib
 import random
 import string
 
-import logging
 
 
 class User(ndb.Model):

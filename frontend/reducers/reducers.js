@@ -37,6 +37,7 @@ import {
   dislikeDeleteReducer
 } from './LikesDislikes'
 
+import { globalErrorReducer } from './GlobalError'
 
 const currentUserReducer = reduceReducers(
   userNewReducer,
@@ -91,5 +92,6 @@ export default combineReducers({
   comment: commentReducer,
   comments: commentsReducer,
   like: likeReducer,
-  dislike: dislikeReducer
+  dislike: dislikeReducer,
+  gerror: globalErrorReducer
 })
