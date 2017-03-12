@@ -8,9 +8,16 @@ import {
   POSTS_INDEX,
   ADD_NEW_POST,
   ADD_UPDATE_POST,
-  REMOVE_POST
+  REMOVE_POST,
+  SEARCH
 } from './ActionTypes'
 
+export const search = (search) => {
+  return {
+    type: SEARCH,
+    payload: axios.get('/api/search', {params: {search: search}})
+  }
+}
 
 export const postNew = (title='', content='') => {
   let data = new FormData();

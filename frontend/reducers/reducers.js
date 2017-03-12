@@ -14,7 +14,8 @@ import {
   userPostsIndexReducer,
   postsIndexReducer,
   addUpdatePostReducer,
-  removePostReducer
+  removePostReducer,
+  searchReducer
  } from './Posts'
 
 import {
@@ -59,7 +60,8 @@ const postsReducer = reduceReducers(
   postsIndexReducer,
   addNewPostReducer,
   addUpdatePostReducer,
-  removePostReducer
+  removePostReducer,
+  searchReducer
 )
 
 const commentReducer = reduceReducers(

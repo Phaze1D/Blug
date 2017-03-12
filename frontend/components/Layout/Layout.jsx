@@ -10,7 +10,8 @@ import ContentClear from 'material-ui/svg-icons/content/clear'
 import Menu from 'material-ui/svg-icons/navigation/menu'
 import Search from '../Search/Search'
 import MenuDrawer from '../MenuDrawer/MenuDrawer'
-import { logout } from '../../actions/Sessions'
+import { verify, logout } from '../../actions/Sessions'
+import { search } from '../../actions/Posts'
 
 
 @connect((store) => {
@@ -24,7 +25,14 @@ export default class Layout extends React.Component{
     this.state = {searchOpen: false, menuOpen: false}
   }
 
+  componentWillMount() {
+    this.props.dispatch(verify())
+  }
+
   toggleSearch(event){
+    if(this.state.searchOpen){
+      this.props.dispatch(search(''))
+    }
     this.setState({searchOpen: !this.state.searchOpen})
   }
 
@@ -43,6 +51,12 @@ export default class Layout extends React.Component{
     hashHistory.push('/login')
   }
 
+  handleSearchSubmit(event){
+    event.preventDefault()
+    let value = event.target.getElementsByTagName("input")[0].value
+    this.props.dispatch(search(value))
+  }
+
   render(){
 
     return(
@@ -50,9 +64,11 @@ export default class Layout extends React.Component{
         <Search
           isWindow={true}
           showOverlay={false}
+          name='main-search'
           backIcon={<ContentClear/>}
           open={this.state.searchOpen}
-          onRequestChange={this.toggleSearch.bind(this)}/>
+          onRequestClear={this.toggleSearch.bind(this)}
+          onRequestSearch={this.handleSearchSubmit.bind(this)}/>
 
           <MenuDrawer
             loggedIn={this.props.currentUser.loggedIn}

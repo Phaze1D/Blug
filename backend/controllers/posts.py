@@ -2,6 +2,7 @@ from flask import abort, redirect, url_for, request, make_response, jsonify, cur
 from google.appengine.ext import ndb
 from backend.models.post import Post
 from backend.models.user import User
+from google.appengine.api import search
 from backend.helpers.sessions import is_login, current_user_id
 from backend.errors.form_exception import FormException
 from backend.errors.login_exception import LoginException
@@ -14,7 +15,13 @@ class PostsController():
 
     def index(self, user_id = None):
         # time.sleep(5)
-        json_results = Post.index_page_json(user_id=user_id, cursor=request.args.get('cursor'))
+
+        json_results = {}
+        if user_id:
+            json_results = Post.users_with_pages(user_id=user_id, cursor=request.args.get('cursor'))
+        else:
+            json_results = Post.all_with_pages(cursor=request.args.get('cursor'))
+
         return jsonify(**json_results)
 
     def get(self, post_id):
@@ -24,7 +31,7 @@ class PostsController():
             post_dict['id'] = post.key.id()
             user_key = post_dict['user']
             post_dict['isOwner'] = current_user_id() == user_key.id()
-            post_dict['user'] = user_key.get().username
+            post_dict.pop('user', None)
             return jsonify(**post_dict)
         else:
             raise OwnerException(message='unauth data')
@@ -45,7 +52,7 @@ class PostsController():
             post_dict['id'] = key.id()
             user_key = post_dict['user']
             post_dict['isOwner'] = current_user_id() == user_key.id()
-            post_dict['user'] = user_key.get().username
+            post_dict.pop('user', None)
 
             return jsonify(**post_dict)
         else:
@@ -67,7 +74,7 @@ class PostsController():
                 post_dict['id'] = key.id()
                 user_key = post_dict['user']
                 post_dict['isOwner'] = current_user_id() == user_key.id()
-                post_dict['user'] = user_key.get().username
+                post_dict.pop('user', None)
                 return jsonify(**post_dict)
             else:
                 raise FormException(message='invalid post data', payload=post.errors())

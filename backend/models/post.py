@@ -1,4 +1,5 @@
 from google.appengine.ext import ndb
+from google.appengine.api import search
 from google.appengine.datastore.datastore_query import Cursor
 from backend.helpers.sessions import current_user_id
 from backend.models.user import User
@@ -8,6 +9,7 @@ import logging
 
 class Post(ndb.Model):
     user = ndb.KeyProperty(kind='User', required=True)
+    username = ndb.StringProperty(required=True)
     title = ndb.StringProperty(required=True)
     content = ndb.TextProperty(required=True)
     likes = ndb.IntegerProperty(default=0)
@@ -34,38 +36,84 @@ class Post(ndb.Model):
 ### Class Methods
 
     @classmethod
-    def index_page_json(cls, user_id=None, cursor=None, per_page=15):
+    def search(cls, search_string, cursor=None, per_page=15):
+        results = search.Index('api-post').search(search_string)
+        keys = []
+        if results:
+            for item in results:
+                k = ndb.Key(Post, long(item.doc_id))
+                keys.append(k)
+
+        posts = ndb.get_multi(keys)
+
+        out =  {'cursor': 'fd', 'more': False, 'posts': []}
+        for post in posts:
+            pd = post.to_dict()
+            pd['id'] = post.key.id()
+            user_key = pd['user']
+            pd['isOwner'] = current_user_id() == user_key.id()
+            pd.pop('user', None)
+            out['posts'].append(pd)
+
+        return out
+
+    @classmethod
+    def users_with_pages(cls, user_id=None, cursor=None, per_page=15):
         cursor = Cursor(urlsafe=cursor)
-        if user_id:
-            posts, next_cursor, more = cls \
-            .query(cls.user == ndb.Key('User', long(user_id))) \
-            .order(-cls.created) \
-            .fetch_page(per_page, start_cursor=cursor)
-        else:
-            posts, next_cursor, more = cls \
-            .query() \
-            .order(-cls.created) \
-            .fetch_page(per_page, start_cursor=cursor)
+        posts, next_cursor, more = cls.query(
+            cls.user == ndb.Key('User', long(user_id))
+        ).order(-cls.created).fetch_page(per_page, start_cursor=cursor)
 
         nc = next_cursor.urlsafe() if bool(next_cursor) else ''
-
         results = {'cursor': nc, 'more': more, 'posts': []}
         for post in posts:
             pd = post.to_dict()
             pd['id'] = post.key.id()
             user_key = pd['user']
             pd['isOwner'] = current_user_id() == user_key.id()
-            pd['user'] = user_key.get().username
+            pd.pop('user', None)
             results['posts'].append(pd)
 
         return results
 
+    @classmethod
+    def all_with_pages(cls, cursor=None, per_page=15):
+        cursor = Cursor(urlsafe=cursor)
+        posts, next_cursor, more = cls.query(
+        ).order(-cls.created).fetch_page(per_page, start_cursor=cursor)
+
+        nc = next_cursor.urlsafe() if bool(next_cursor) else ''
+        results = {'cursor': nc, 'more': more, 'posts': []}
+        for post in posts:
+            pd = post.to_dict()
+            pd['id'] = post.key.id()
+            user_key = pd['user']
+            pd['isOwner'] = current_user_id() == user_key.id()
+            pd.pop('user', None)
+            results['posts'].append(pd)
+
+        return results
+
+    @classmethod
+    def _post_delete_hook(cls, key, future):
+	    search.Index('api-post').delete(str(key.id()))
+
 
 ### Private Methods
+
+    def _post_put_hook(self, future):
+        doc = search.Document(doc_id=str(self.key.id()), fields=[
+            search.TextField(name='title', value=self.title),
+            search.TextField(name='content', value=self.content),
+            search.TextField(name='username', value=pieces(self.username))]
+        )
+        search.Index('api-post').put(doc)
+
 
     def _pre_put_hook(self):
         if not bool(self.key.id()):
             self.user=ndb.Key(User, long( current_user_id() ) )
+            self.username=self.user.get().username
 
     def __title_errors(self):
         errors = []
@@ -84,3 +132,17 @@ class Post(ndb.Model):
         else:
             errors.append('content missing')
         return errors
+
+
+def pieces(string):
+    logging.warning('sdfds')
+    pieces = []
+
+    for word in string.split():
+        cursor = 1
+    while True:
+        pieces.append(word[:cursor])
+        if cursor == len(word): break
+        cursor += 1
+
+    return ','.join(pieces)

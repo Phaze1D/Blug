@@ -53,7 +53,7 @@ export default class PostCard extends React.Component{
 
   onLiked(){
     this.setState({liked: true, vl: this.state.vl + 1})
-    
+
     this.props.dispatch( dislikeDelete(this.props.post.id) )
     .then(() => this.setState({disliked: false, vd: this.state.vd - 1}))
   }
@@ -81,7 +81,7 @@ export default class PostCard extends React.Component{
       created,
       dislikes,
       likes,
-      user,
+      username,
       isOwner
     } = this.props.post
 
@@ -122,7 +122,7 @@ export default class PostCard extends React.Component{
 
         <div className='card-bottom'>
           <section>
-            {user}
+            {username}
           </section>
 
           <section className='info'>
@@ -130,19 +130,20 @@ export default class PostCard extends React.Component{
           </section>
 
           <section className='icons'>
+            <span>{likes + this.state.vl}</span>
             <form id='upvote' onSubmit={this.handleLike.bind(this)}>
               <IconButton className={lcls} type='submit' disabled={fetching}><UpVote /></IconButton>
               <input type='hidden' value={id}/>
             </form>
-            <span>{likes + this.state.vl}</span>
 
+
+            <span>{dislikes + this.state.vd}</span>
             <form id='downvote' onSubmit={this.handleDislike.bind(this)}>
               <IconButton className={dcls} type='submit' disabled={fetching}><DownVote/></IconButton>
               <input type='hidden' value={id}/>
             </form>
-            <span>{dislikes + this.state.vd}</span>
 
-            <IconButton><Comments/></IconButton>
+
           </section>
 
         </div>

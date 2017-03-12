@@ -24,7 +24,7 @@ export default class Search extends React.Component{
             <Overlay
               show={this.props.open}
               className='msearch-overlay'
-              onTouchTap={this.props.onRequestChange}/>
+              onTouchTap={this.props.onRequestClear}/>
           }
 
 
@@ -39,18 +39,20 @@ export default class Search extends React.Component{
           transitionAppear={true}
           transitionAppearTimeout={400}>
             {this.props.open &&
-              <div className={seaClasses} style={this.props.barStyle}>
-                <IconButton className='msearch-back' onTouchTap={this.props.onRequestChange} disableTouchRipple={true}>
+              <form method='GET' className={seaClasses} style={this.props.barStyle} onSubmit={this.props.onRequestSearch}>
+                <IconButton className='msearch-back' onTouchTap={this.props.onRequestClear} disableTouchRipple={true}>
                   {backIcon}
                 </IconButton>
                 <TextField
                   type="search"
+                  name={this.props.name}
                   hintStyle={{fontSize: '20px'}}
                   className='msearch-input'
                   hintText='Search...'
+                  autoComplete='off'
                   underlineShow={false}/>
 
-              </div>
+              </form>
             }
           </ReactCSSTransitionGroup>
 

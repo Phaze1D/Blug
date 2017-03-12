@@ -20,6 +20,7 @@ export const DISLIKE_NEW         = 'DISLIKE_NEW'
 export const DISLIKE_DELETE      = 'DISLIKE_DELETE'
 export const REMOVE_POST         = 'REMOVE_POST'
 export const POST_DELETE         = 'POST_DELETE'
+export const SEARCH              = 'SEARCH'
 
 
 

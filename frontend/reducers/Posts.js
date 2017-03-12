@@ -140,7 +140,7 @@ export const postDeleteReducer = (state={}, action) => {
 }
 
 
-export const userPostsIndexReducer = (state=[], action) => {
+export const userPostsIndexReducer = (state={}, action) => {
   switch (action.type) {
     case `${types.USER_POSTS_INDEX}_LOADING`:
 
@@ -157,7 +157,7 @@ export const userPostsIndexReducer = (state=[], action) => {
   }
 }
 
-export const postsIndexReducer = (state=[], action) => {
+export const postsIndexReducer = (state={}, action) => {
   switch (action.type) {
     case `${types.POSTS_INDEX}_LOADING`:
       return {
@@ -176,6 +176,36 @@ export const postsIndexReducer = (state=[], action) => {
       }
 
     case `${types.POSTS_INDEX}_ERROR`:
+      return {
+        ...state,
+        fetching: false,
+        posts: [],
+        error: action.payload.message
+      }
+
+    default: return state
+  }
+}
+
+export const searchReducer = (state={}, action) => {
+  switch (action.type) {
+    case `${types.SEARCH}_LOADING`:
+      return {
+        ...state,
+        fetching: true,
+        posts: [],
+      }
+
+    case `${types.SEARCH}_SUCCESS`:
+      return {
+        ...state,
+        fetching: false,
+        cursor: action.payload.data.cursor,
+        more: action.payload.data.more,
+        posts: action.payload.data.posts,
+      }
+
+    case `${types.SEARCH}_ERROR`:
       return {
         ...state,
         fetching: false,
