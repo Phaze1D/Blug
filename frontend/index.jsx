@@ -16,7 +16,11 @@ import './index.sass'
 document.addEventListener("DOMContentLoaded", function(event) {
   injectTapEventPlugin()
 
-  const middleware = applyMiddleware(logger(), promise({promiseTypeSuffixes: ['LOADING', 'SUCCESS', 'ERROR']}))
+  let middleware = applyMiddleware(logger(), promise({promiseTypeSuffixes: ['LOADING', 'SUCCESS', 'ERROR']}))
+
+  if(process.env.NODE_ENV === 'production'){
+    middleware = applyMiddleware( promise({promiseTypeSuffixes: ['LOADING', 'SUCCESS', 'ERROR']}))
+  }
   const store = createStore(reducers, middleware)
 
   ReactDOM.render(
