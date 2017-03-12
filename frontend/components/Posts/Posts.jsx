@@ -4,7 +4,8 @@ import { connect } from 'react-redux'
 import { hashHistory } from 'react-router'
 import PostCard from '../PostCard/PostCard'
 import PostForm from '../PostForm/PostForm'
-import { userPostsIndex, postsIndex, postGet } from '../../actions/Posts'
+import EventListener, {withOptions} from 'react-event-listener';
+import { postsNextPage, postsIndex, postGet, search } from '../../actions/Posts'
 import { resetErrors } from '../../actions/ActionTypes'
 import { verify } from '../../actions/Sessions'
 
@@ -19,6 +20,7 @@ export default class Posts extends React.Component{
   constructor(props){
     super(props)
     this.state = {rightOpen: false, updateIndex: -1}
+    this.searchString = ''
   }
 
   componentWillMount() {
@@ -59,6 +61,24 @@ export default class Posts extends React.Component{
     }
   }
 
+  handleScroll(event){
+    let hitBottom = (window.innerHeight + window.pageYOffset) >= document.getElementsByTagName('main')[0].offsetHeight
+    if (hitBottom && !this.props.posts.fetching &&this.props.posts.more){
+      this.props.dispatch(postsNextPage(this.props.posts.cursor, this.searchString))
+    }
+  }
+
+  handleSearchSubmit(event){
+    let value = event.target.getElementsByTagName("input")[0].value
+    this.searchString = value
+    this.props.dispatch(search(value))
+  }
+
+  handleSearchClear(event){
+    this.searchString = ''
+    this.props.dispatch(postsIndex())
+  }
+
   render(){
     let {
       posts,
@@ -79,7 +99,13 @@ export default class Posts extends React.Component{
     return (
       <Layout
         onRequestNew={this.handleNew.bind(this)}
-        onRequestLogout={this.onLogout.bind(this)}>
+        onRequestLogout={this.onLogout.bind(this)}
+        onRequestSearchSubmit={this.handleSearchSubmit.bind(this)}
+        onRequestSearchClear={this.handleSearchClear.bind(this)}>
+
+        <EventListener
+          target="window"
+          onScroll={withOptions(this.handleScroll.bind(this), {passive: true, capture: false})}/>
 
         <PostForm
           open={this.state.rightOpen}

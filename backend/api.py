@@ -4,7 +4,6 @@ from backend.controllers.sessions import SessionsController
 from backend.controllers.comments import CommentsController
 from backend.controllers.likes import LikesController
 from backend.controllers.dislikes import DislikesController
-from backend.controllers.search import SearchController
 
 
 
@@ -20,9 +19,6 @@ def init_api_routes(app):
     app.add_url_rule('/api/post/<post_id>', 'posts_delete', view_func=postCon.delete, methods=['DELETE'])
     app.add_url_rule('/api/user/<user_id>/posts', 'user_posts_index', view_func=postCon.index, methods=['GET'])
     app.add_url_rule('/api/posts', 'posts_index', view_func=postCon.index, methods=['GET'])
-
-    searchCon = SearchController()
-    app.add_url_rule('/api/search', 'search', view_func=searchCon.get, methods=['GET'])
 
     sessionCon = SessionsController()
     app.add_url_rule('/api/login', 'sessions_create', view_func=sessionCon.create, methods=['POST'])

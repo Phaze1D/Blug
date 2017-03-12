@@ -11,7 +11,6 @@ import Menu from 'material-ui/svg-icons/navigation/menu'
 import Search from '../Search/Search'
 import MenuDrawer from '../MenuDrawer/MenuDrawer'
 import { verify, logout } from '../../actions/Sessions'
-import { search } from '../../actions/Posts'
 
 
 @connect((store) => {
@@ -31,7 +30,7 @@ export default class Layout extends React.Component{
 
   toggleSearch(event){
     if(this.state.searchOpen){
-      this.props.dispatch(search(''))
+      this.props.onRequestSearchClear(event)
     }
     this.setState({searchOpen: !this.state.searchOpen})
   }
@@ -53,8 +52,7 @@ export default class Layout extends React.Component{
 
   handleSearchSubmit(event){
     event.preventDefault()
-    let value = event.target.getElementsByTagName("input")[0].value
-    this.props.dispatch(search(value))
+    this.props.onRequestSearchSubmit(event)
   }
 
   render(){

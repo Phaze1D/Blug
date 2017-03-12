@@ -9,15 +9,10 @@ import {
   ADD_NEW_POST,
   ADD_UPDATE_POST,
   REMOVE_POST,
-  SEARCH
+  SEARCH,
+  POSTS_NEXT_PAGE
 } from './ActionTypes'
 
-export const search = (search) => {
-  return {
-    type: SEARCH,
-    payload: axios.get('/api/search', {params: {search: search}})
-  }
-}
 
 export const postNew = (title='', content='') => {
   let data = new FormData();
@@ -54,27 +49,37 @@ export const postDelete = (post_id) => {
   }
 }
 
-export const userPostsIndex = (user_id, cursor=null) => {
+export const postsIndex = () => {
   return {
-    type: USER_POSTS_INDEX,
-    payload: axios.get(`/api/user/${user_id}/posts`, {
-      params:{
-        cursor: cursor
+    type: POSTS_INDEX,
+    payload: axios.get(`/api/posts`)
+  }
+}
+
+export const search = (search) => {
+  return {
+    type: SEARCH,
+    payload: axios.get('/api/posts', {
+      params: {
+        search: search
       }
     })
   }
 }
 
-export const postsIndex = (cursor=null) => {
+export const postsNextPage = (cursor, search=null) => {
   return {
-    type: POSTS_INDEX,
+    type: POSTS_NEXT_PAGE,
     payload: axios.get(`/api/posts`, {
       params:{
-        cursor: cursor
+        cursor: cursor,
+        search: search
       }
     })
   }
 }
+
+
 
 
 export const addNewPost = (post) => {

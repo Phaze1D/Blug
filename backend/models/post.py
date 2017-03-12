@@ -37,7 +37,10 @@ class Post(ndb.Model):
 
     @classmethod
     def search(cls, search_string, cursor=None, per_page=15):
-        results = search.Index('api-post').search(search_string)
+        cursor = search.Cursor(web_safe_string=cursor)
+        options = search.QueryOptions(cursor=cursor, limit=per_page)
+        query = search.Query(query_string=search_string, options=options)
+        results = search.Index('api-post').search(query)
         keys = []
         if results:
             for item in results:
@@ -46,14 +49,14 @@ class Post(ndb.Model):
 
         posts = ndb.get_multi(keys)
 
-        out =  {'cursor': 'fd', 'more': False, 'posts': []}
-        for post in posts:
-            pd = post.to_dict()
-            pd['id'] = post.key.id()
-            user_key = pd['user']
-            pd['isOwner'] = current_user_id() == user_key.id()
-            pd.pop('user', None)
-            out['posts'].append(pd)
+        cs = ''
+        more = False
+        if bool(results.cursor):
+            cs = results.cursor.web_safe_string
+            more = True
+
+        out =  {'cursor': cs, 'more': more, 'posts': []}
+        out['posts'] = cls.posts_to_array(posts)
 
         return out
 
@@ -66,13 +69,7 @@ class Post(ndb.Model):
 
         nc = next_cursor.urlsafe() if bool(next_cursor) else ''
         results = {'cursor': nc, 'more': more, 'posts': []}
-        for post in posts:
-            pd = post.to_dict()
-            pd['id'] = post.key.id()
-            user_key = pd['user']
-            pd['isOwner'] = current_user_id() == user_key.id()
-            pd.pop('user', None)
-            results['posts'].append(pd)
+        results['posts'] = cls.posts_to_array(posts)
 
         return results
 
@@ -80,19 +77,27 @@ class Post(ndb.Model):
     def all_with_pages(cls, cursor=None, per_page=15):
         cursor = Cursor(urlsafe=cursor)
         posts, next_cursor, more = cls.query(
+
         ).order(-cls.created).fetch_page(per_page, start_cursor=cursor)
 
         nc = next_cursor.urlsafe() if bool(next_cursor) else ''
         results = {'cursor': nc, 'more': more, 'posts': []}
+        results['posts'] = cls.posts_to_array(posts)
+
+        return results
+
+    @classmethod
+    def posts_to_array(cls, posts):
+        results = []
         for post in posts:
             pd = post.to_dict()
             pd['id'] = post.key.id()
             user_key = pd['user']
             pd['isOwner'] = current_user_id() == user_key.id()
             pd.pop('user', None)
-            results['posts'].append(pd)
-
+            results.append(pd)
         return results
+
 
     @classmethod
     def _post_delete_hook(cls, key, future):
@@ -105,6 +110,7 @@ class Post(ndb.Model):
         doc = search.Document(doc_id=str(self.key.id()), fields=[
             search.TextField(name='title', value=self.title),
             search.TextField(name='content', value=self.content),
+            search.DateField(name='created', value=self.created),
             search.TextField(name='username', value=pieces(self.username))]
         )
         search.Index('api-post').put(doc)

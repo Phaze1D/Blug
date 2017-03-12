@@ -11,7 +11,7 @@ import {
   postEditReducer,
   postGetReducer,
   addNewPostReducer,
-  userPostsIndexReducer,
+  postsNextPageReducer,
   postsIndexReducer,
   addUpdatePostReducer,
   removePostReducer,
@@ -56,7 +56,7 @@ const postReducer = reduceReducers(
 )
 
 const postsReducer = reduceReducers(
-  userPostsIndexReducer,
+  postsNextPageReducer,
   postsIndexReducer,
   addNewPostReducer,
   addUpdatePostReducer,

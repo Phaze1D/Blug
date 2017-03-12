@@ -140,19 +140,32 @@ export const postDeleteReducer = (state={}, action) => {
 }
 
 
-export const userPostsIndexReducer = (state={}, action) => {
+export const postsNextPageReducer = (state={}, action) => {
   switch (action.type) {
-    case `${types.USER_POSTS_INDEX}_LOADING`:
+    case `${types.POSTS_NEXT_PAGE}_LOADING`:
+      return {
+        ...state,
+        fetching: true,
+        error: null
+      }
 
-      break;
+    case `${types.POSTS_NEXT_PAGE}_SUCCESS`:
+      return {
+        ...state,
+        fetching: false,
+        cursor: action.payload.data.cursor,
+        more: action.payload.data.more,
+        error: null,
+        posts: state.posts.concat(action.payload.data.posts)
+      }
 
-    case `${types.USER_POSTS_INDEX}_SUCCESS`:
+    case `${types.POSTS_NEXT_PAGE}_ERROR`:
+      return {
+        ...state,
+        fetching: false,
+        error: action.payload.message
+      }
 
-      break;
-
-    case `${types.USER_POSTS_INDEX}_ERROR`:
-
-      break;
     default: return state
   }
 }

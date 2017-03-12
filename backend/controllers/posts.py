@@ -15,10 +15,11 @@ class PostsController():
 
     def index(self, user_id = None):
         # time.sleep(5)
-
         json_results = {}
         if user_id:
             json_results = Post.users_with_pages(user_id=user_id, cursor=request.args.get('cursor'))
+        elif bool(request.args.get('search')):
+            json_results = Post.search(search_string=request.args.get('search'), cursor=request.args.get('cursor'))
         else:
             json_results = Post.all_with_pages(cursor=request.args.get('cursor'))
 
