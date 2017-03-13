@@ -36,10 +36,10 @@ export default class PostForm extends React.Component{
 
     if(this.props.updateIndex >= 0){
       this.props.dispatch(postEdit(this.props.post.post.id, title, content))
-      .then(this.onPostSuccess.bind(this), this.onPostError.bind(this))
+      .then(this.onPostSuccess.bind(this), this.onGlobalError.bind(this))
     }else{
       this.props.dispatch(postNew(title, content))
-      .then(this.onPostSuccess.bind(this), this.onPostError.bind(this))
+      .then(this.onPostSuccess.bind(this), this.onGlobalError.bind(this))
     }
 
   }
@@ -53,8 +53,12 @@ export default class PostForm extends React.Component{
     this.props.onRequestChange()
   }
 
-  onPostError(){
-
+  onGlobalError(payload){
+    if(payload.response){
+      // this.props.dispatch(setGlobalError(payload.response.data.message, true))
+    }else{
+      this.props.dispatch(setGlobalError(payload.message, true))
+    }
   }
 
   handleOnFocus(event){

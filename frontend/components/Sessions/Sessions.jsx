@@ -24,14 +24,19 @@ export default class Sessions extends React.Component{
   }
 
   componentWillMount(){
-    this.props.dispatch(verify()).then(this.onLoggedIn.bind(this), this.onLoggedInError.bind(this))
+    this.props.dispatch(verify()).then(this.onLoggedIn.bind(this), this.onGlobalError.bind(this))
   }
 
   onLoggedIn(){
     hashHistory.push('/posts');
   }
 
-  onLoggedInError(){
+  onGlobalError(payload){
+    if(payload.response){
+      // this.props.dispatch(setGlobalError(payload.response.data.message, true))
+    }else{
+      this.props.dispatch(setGlobalError(payload.message, true))
+    }
   }
 
   handleV2Tap(event){
@@ -46,10 +51,10 @@ export default class Sessions extends React.Component{
     let password = document.getElementById('password').value
     if(this.state.isLoginForm){
       this.props.dispatch(login(username, password))
-      .then(this.onLoggedIn.bind(this), this.onLoggedInError.bind(this))
+      .then(this.onLoggedIn.bind(this), this.onGlobalError.bind(this))
     }else{
       this.props.dispatch(userNew(username, password, email))
-      .then(this.onLoggedIn.bind(this), this.onLoggedInError.bind(this))
+      .then(this.onLoggedIn.bind(this), this.onGlobalError.bind(this))
     }
   }
 

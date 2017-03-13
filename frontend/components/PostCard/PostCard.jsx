@@ -14,6 +14,8 @@ import { hashHistory } from 'react-router'
 import { connect } from 'react-redux'
 import { likeNew, likeDelete, dislikeNew, dislikeDelete } from '../../actions/LikesDislikes'
 import { postDelete, removePost } from '../../actions/Posts'
+import { setGlobalError } from '../../actions/ActionTypes'
+
 
 
 @connect( (store) => {
@@ -35,7 +37,7 @@ export default class PostCard extends React.Component{
   handleDislike(event){
     event.preventDefault()
     this.props.dispatch(dislikeNew(this.props.post.id))
-    .then(this.onDisliked.bind(this), this.onError.bind(this))
+    .then(this.onDisliked.bind(this), this.onGlobalError.bind(this))
   }
 
   onDisliked(){
@@ -48,29 +50,30 @@ export default class PostCard extends React.Component{
   handleLike(event){
     event.preventDefault()
     this.props.dispatch(likeNew(this.props.post.id))
-    .then(this.onLiked.bind(this), this.onError.bind(this))
+    .then(this.onLiked.bind(this), this.onGlobalError.bind(this))
   }
 
   onLiked(){
     this.setState({liked: true, vl: this.state.vl + 1})
-
     this.props.dispatch( dislikeDelete(this.props.post.id) )
     .then(() => this.setState({disliked: false, vd: this.state.vd - 1}))
   }
 
-  onError(payload){
-    if(payload.response.status === 412){
-      hashHistory.push('/login')
-    }
-  }
-
   handleDelete(event){
     this.props.dispatch(postDelete(this.props.post.id))
-    .then(this.onDeleted.bind(this))
+    .then(this.onDeleted.bind(this), this.onGlobalError.bind(this))
   }
 
   onDeleted(){
     this.props.dispatch(removePost(this.props.index))
+  }
+
+  onGlobalError(payload){
+    if(payload.response){
+      this.props.dispatch(setGlobalError(payload.response.data.message, true))
+    }else{
+      this.props.dispatch(setGlobalError(payload.message, true))
+    }
   }
 
   render(){

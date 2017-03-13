@@ -10,12 +10,15 @@ import ContentClear from 'material-ui/svg-icons/content/clear'
 import Menu from 'material-ui/svg-icons/navigation/menu'
 import Search from '../Search/Search'
 import MenuDrawer from '../MenuDrawer/MenuDrawer'
+import ErrorBox from '../ErrorBox/ErrorBox'
 import { verify, logout } from '../../actions/Sessions'
+import { setGlobalError } from '../../actions/ActionTypes'
 
 
 @connect((store) => {
   return {
-    currentUser: store.currentUser
+    currentUser: store.currentUser,
+    gerror: store.gerror
   }
 })
 export default class Layout extends React.Component{
@@ -42,7 +45,8 @@ export default class Layout extends React.Component{
 
   handleLogout(event){
     this.setState({menuOpen: false})
-    this.props.dispatch(logout()).then(this.onLogout.bind(this))
+    this.props.dispatch(logout())
+      .then(this.onLogout.bind(this), this.onGlobalError.bind(this))
   }
 
   onLogout(){
@@ -59,7 +63,23 @@ export default class Layout extends React.Component{
     this.props.onRequestSearchSubmit(event)
   }
 
+  onGlobalError(payload){
+    if(payload.response){
+      this.props.dispatch(setGlobalError(payload.response.data.message, true))
+    }else{
+      this.props.dispatch(setGlobalError(payload.message, true))
+    }
+  }
+
+  onErrorShown(){
+    this.props.dispatch(setGlobalError('', false))
+  }
+
   render(){
+    const {
+      error,
+      show
+    } = this.props.gerror
 
     return(
       <main>
@@ -72,12 +92,17 @@ export default class Layout extends React.Component{
           onRequestClear={this.toggleSearch.bind(this)}
           onRequestSearch={this.handleSearchSubmit.bind(this)}/>
 
-          <MenuDrawer
-            loggedIn={this.props.currentUser.loggedIn}
-            open={this.state.menuOpen}
-            onRequestChange={this.toggleMenu.bind(this)}
-            onRequestLogout={this.handleLogout.bind(this)}
-            onRequestLogin={this.handleLogin.bind(this)}/>
+        <ErrorBox
+          onRequestErrorShown={this.onErrorShown.bind(this)}
+          show={show}
+          message={error}/>
+
+        <MenuDrawer
+          loggedIn={this.props.currentUser.loggedIn}
+          open={this.state.menuOpen}
+          onRequestChange={this.toggleMenu.bind(this)}
+          onRequestLogout={this.handleLogout.bind(this)}
+          onRequestLogin={this.handleLogin.bind(this)}/>
 
         <header className='layout-bar'>
             <IconButton className='menu-button' onTouchTap={this.toggleMenu.bind(this)}>

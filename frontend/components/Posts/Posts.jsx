@@ -25,6 +25,7 @@ export default class Posts extends React.Component{
 
   componentWillMount() {
     this.props.dispatch(postsIndex())
+    .then(null, this.onGlobalError.bind(this))
   }
 
   handleNew(event){
@@ -46,14 +47,13 @@ export default class Posts extends React.Component{
     this.setState({updateIndex: index})
     this.props.dispatch(resetErrors('POST'))
     this.props.dispatch(postGet(id, index))
-    .then(this.onPostGot.bind(this))
+    .then(this.onPostGot.bind(this), this.onGlobalError.bind(this))
   }
 
   onPostGot(){
     if(this.props.post.post.isOwner){
       this.setState({rightOpen: true})
     }else{
-      
       hashHistory.push('/login');
     }
   }
@@ -62,6 +62,7 @@ export default class Posts extends React.Component{
     let hitBottom = (window.innerHeight + window.pageYOffset) >= document.getElementsByTagName('main')[0].offsetHeight
     if (hitBottom && !this.props.posts.fetching &&this.props.posts.more){
       this.props.dispatch(postsNextPage(this.props.posts.cursor, this.searchString))
+      .then(null, this.onGlobalError.bind(this))
     }
   }
 
@@ -69,11 +70,21 @@ export default class Posts extends React.Component{
     let value = event.target.getElementsByTagName("input")[0].value
     this.searchString = value
     this.props.dispatch(search(value))
+    .then(null, this.onGlobalError.bind(this))
   }
 
   handleSearchClear(event){
     this.searchString = ''
     this.props.dispatch(postsIndex())
+    .then(null, this.onGlobalError.bind(this))
+  }
+
+  onGlobalError(payload){
+    if(payload.response){
+      this.props.dispatch(setGlobalError(payload.response.data.message, true))
+    }else{
+      this.props.dispatch(setGlobalError(payload.message, true))
+    }
   }
 
   render(){

@@ -1,0 +1,45 @@
+.error-box
+  +shadow-4dp()
+  position: fixed
+  z-index: $z-index-higher
+  left: 0
+  top: 80px
+  background-color: $deep-orange-a400
+  width: 300px
+  color: white
+  padding: 0 16px
+  p
+    font-size: 1.2em
+
+
+.appear-error
+  transform: translate(-100%, 0)
+
+  &.appear-error-active
+    transition-timing-function: $animation-curve-default
+    transition-delay: 0
+    transition-duration: $animation-duration
+    transition-property: transform
+    transform: translate(0, 0)
+
+
+.enter-error
+  transform: translate(-100%, 0)
+
+  &.enter-error-active
+    transition-timing-function: $animation-curve-default
+    transition-delay: 0
+    transition-duration: $animation-duration
+    transition-property: transform
+    transform: translate(0, 0)
+
+
+.leave-error
+  opacity: 1
+
+  &.leave-error-active
+    transition-timing-function: $animation-curve-default
+    transition-delay: 0
+    transition-duration: $animation-duration
+    transition-property: opacity
+    opacity: 0
