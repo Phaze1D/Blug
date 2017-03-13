@@ -133,6 +133,8 @@ export default class PostCard extends React.Component{
           </section>
 
           <section className='icons'>
+            <IconButton disabled={fetching}><Comments /></IconButton>
+
             <span>{likes + this.state.vl}</span>
             <form id='upvote' onSubmit={this.handleLike.bind(this)}>
               <IconButton className={lcls} type='submit' disabled={fetching}><UpVote /></IconButton>
