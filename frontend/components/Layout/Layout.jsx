@@ -72,7 +72,7 @@ export default class Layout extends React.Component{
   }
 
   onErrorShown(){
-    this.props.dispatch(setGlobalError('', false))
+    this.props.dispatch(setGlobalError(this.props.gerror.error, false))
   }
 
   render(){
