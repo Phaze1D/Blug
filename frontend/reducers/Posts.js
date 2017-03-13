@@ -176,7 +176,6 @@ export const postsIndexReducer = (state={}, action) => {
       return {
         ...state,
         fetching: true,
-        posts: [],
       }
 
     case `${types.POSTS_INDEX}_SUCCESS`:
@@ -192,7 +191,6 @@ export const postsIndexReducer = (state={}, action) => {
       return {
         ...state,
         fetching: false,
-        posts: [],
         error: action.payload.message
       }
 
@@ -206,7 +204,6 @@ export const searchReducer = (state={}, action) => {
       return {
         ...state,
         fetching: true,
-        posts: [],
       }
 
     case `${types.SEARCH}_SUCCESS`:
@@ -222,7 +219,6 @@ export const searchReducer = (state={}, action) => {
       return {
         ...state,
         fetching: false,
-        posts: [],
         error: action.payload.message
       }
 
