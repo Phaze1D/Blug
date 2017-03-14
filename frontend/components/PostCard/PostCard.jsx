@@ -125,7 +125,7 @@ export default class PostCard extends React.Component{
   }
 
   onGlobalError(payload){
-    if(payload.response){
+    if(payload.response.status == 412){
       hashHistory.push('/login')
     }else{
       this.props.dispatch(setGlobalError(payload.message, true))

@@ -10,8 +10,23 @@ from backend.errors.owner_exception import OwnerException
 
 
 class PostsController():
+    """ Using MVC and REST pattern for handling all the Post's api methods
+    """
 
     def index(self, user_id = None):
+        """ REST index method
+
+        Params:
+            cursor: A web safe string that represents the next page of pagination || None
+            search: The search string to search for || None
+
+        Args:
+            user_id: The post forgien key that represents the user it belongs to
+
+        Returns:
+            An array of 15 JSON Post objects
+        """
+
         json_results = {}
         if user_id:
             json_results = Post.users_with_pages(user_id=user_id, cursor=request.args.get('cursor'))
@@ -23,6 +38,18 @@ class PostsController():
         return jsonify(**json_results)
 
     def get(self, post_id):
+        """ REST get method
+
+        Args:
+            post_id: The id the post to get
+
+        Returns:
+            A JSON Post object
+
+        Raises:
+            OwnerException: if post is not found
+        """
+
         post = Post.get_by_id(long(post_id))
         if post:
             post_dict = post.to_dict()
@@ -36,6 +63,17 @@ class PostsController():
 
 
     def create(self):
+        """ REST create method
+
+        Returns:
+            A JSON object with the new Post information
+
+        Raises:
+            LoginException: if user is not logged in
+            FormException: if Post info is not valid
+
+        """
+
         if not is_login():
             raise LoginException(message='not logged in')
 
@@ -58,6 +96,20 @@ class PostsController():
 
 
     def update(self, post_id):
+        """ REST update method
+
+        Args:
+            post_id: The post's id that will be updated
+
+        Returns:
+            A JSON object with the updated Post information
+
+        Raises:
+            LoginException: if user is not logged in
+            FormException: if Post info is not valid
+            OwnerException: if Post does not belong to current user
+        """
+
         if not is_login():
             raise LoginException(message='not logged in')
 
@@ -79,7 +131,21 @@ class PostsController():
 
         raise OwnerException(message='unauth data')
 
+
     def delete(self, post_id):
+        """ REST delete method
+
+        Args:
+            post_id: The post's id that will be deleted
+
+        Returns:
+            A JSON object key deleted set to true
+
+        Raises:
+            LoginException: if user is not logged in
+            OwnerException: if Post does not belong to current user
+        """
+
         if not is_login():
             raise LoginException(message='not logged in')
 

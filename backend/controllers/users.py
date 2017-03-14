@@ -6,11 +6,20 @@ from backend.errors.login_exception import LoginException
 
 
 class UsersController():
-
-    def get(self, username):
-        return jsonify(**User.get_by_username( username ).to_safe_dict())
+    """ Using MVC and REST pattern for handling all the User's api methods
+    """
 
     def create(self):
+        """ REST create method
+
+        Returns:
+            A JSON object with new User information
+
+        Raises:
+            LoginException: if user is already logged in
+            FormException: if user form data is invalid
+        """
+
         if is_login():
             raise LoginException('already logged in', status_code=301)
 

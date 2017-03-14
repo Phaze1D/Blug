@@ -10,7 +10,6 @@ from backend.controllers.dislikes import DislikesController
 def init_api_routes(app):
     usersCon = UsersController()
     app.add_url_rule('/api/user/create', 'users_create', view_func=usersCon.create, methods=['POST'])
-    app.add_url_rule('/api/user/<username>', 'users_get', view_func=usersCon.get, methods=['GET'])
 
     postCon = PostsController()
     app.add_url_rule('/api/post/create', 'posts_create', view_func=postCon.create, methods=['POST'])

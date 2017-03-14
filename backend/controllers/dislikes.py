@@ -9,9 +9,27 @@ from backend.errors.owner_exception import OwnerException
 
 
 
-class DislikesController(object):
+class DislikesController():
+    """ Using MVC and REST pattern for handling all the Dislike's api methods
+    """
 
     def create(self, post_id):
+        """ REST create method
+
+        Note:
+            This also updates the corresponding Post by adding 1 to its dislike property
+
+        Args:
+            post_id: The post's id that will be disliked
+
+        Returns:
+            A JSON object with the dislike information
+
+        Raises:
+            LoginException: if user is not logged in
+            FormException: if dislike is invalid || dislike already exist
+        """
+
         if not is_login():
             raise LoginException(message='not logged in')
 
@@ -32,11 +50,27 @@ class DislikesController(object):
             ld['user'] = dislike.user.id()
             return jsonify(**ld)
         else:
-            raise OwnerException(message='not auth')
+            raise FormException(message='not auth')
 
 
 
     def delete(self, post_id):
+        """ REST delete method
+
+        Note:
+            This also updates the corresponding Post by subtracting 1 to its dislike property
+
+        Args:
+            post_id: The post's id that will be undisliked
+
+        Returns:
+            A JSON object with a simple deleted key value true
+
+        Raises:
+            LoginException: if user is not logged in
+            OwnerException: if dislike was not found
+        """
+
         if not is_login():
             raise LoginException(message='not logged in')
 
