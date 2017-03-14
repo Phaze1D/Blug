@@ -1,7 +1,12 @@
 import * as types from '../actions/ActionTypes'
 
 
-
+/**
+* Redux reducer for the async likeNewReducer action
+* @param {object} state - previous immutable state
+* @param {object} action - redux action
+* @return {object} newly created state
+*/
 export const likeNewReducer = (state={}, action) => {
   switch (action.type) {
     case `${types.LIKE_NEW}_LOADING`:
@@ -26,6 +31,13 @@ export const likeNewReducer = (state={}, action) => {
   }
 }
 
+
+/**
+* Redux reducer for the async likeDeleteReducer action
+* @param {object} state - previous immutable state
+* @param {object} action - redux action
+* @return {object} newly created state
+*/
 export const likeDeleteReducer = (state={}, action) => {
   switch (action.type) {
     case `${types.LIKE_DELETE}_LOADING`:
@@ -50,6 +62,13 @@ export const likeDeleteReducer = (state={}, action) => {
   }
 }
 
+
+/**
+* Redux reducer for the async dislikeNewReducer action
+* @param {object} state - previous immutable state
+* @param {object} action - redux action
+* @return {object} newly created state
+*/
 export const dislikeNewReducer = (state={}, action) => {
   switch (action.type) {
     case `${types.DISLIKE_NEW}_LOADING`:
@@ -74,6 +93,13 @@ export const dislikeNewReducer = (state={}, action) => {
   }
 }
 
+
+/**
+* Redux reducer for the async dislikeDeleteReducer action
+* @param {object} state - previous immutable state
+* @param {object} action - redux action
+* @return {object} newly created state
+*/
 export const dislikeDeleteReducer = (state={}, action) => {
   switch (action.type) {
     case `${types.DISLIKE_DELETE}_LOADING`:

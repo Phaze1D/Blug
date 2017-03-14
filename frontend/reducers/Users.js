@@ -1,6 +1,12 @@
 import * as types from '../actions/ActionTypes'
 
 
+/**
+* Redux reducer for the async userNew action
+* @param {object} state - previous immutable state
+* @param {object} action - redux action
+* @return {object} newly created state
+*/
 export const userNewReducer = (state={}, action) => {
   let newState = null
 
@@ -26,25 +32,6 @@ export const userNewReducer = (state={}, action) => {
         loggedIn: false,
         errors: action.payload.response.data
       }
-
-    default: return state
-  }
-}
-
-
-export const userGetReducer = (state={}, action) => {
-  switch (action.type) {
-    case `${types.USER_GET}_LOADING`:
-
-      break;
-
-    case `${types.USER_GET}_SUCCESS`:
-
-      break;
-
-    case `${types.USER_GET}_ERROR`:
-
-      break;
 
     default: return state
   }

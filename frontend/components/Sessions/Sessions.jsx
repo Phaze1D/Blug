@@ -84,6 +84,7 @@ export default class Sessions extends React.Component{
     }
   }
 
+
   render(){
     const {
       verifing,

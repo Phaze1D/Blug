@@ -1,6 +1,11 @@
 import * as types from '../actions/ActionTypes'
 
-
+/**
+* Redux reducer for the async postCommentNew action
+* @param {object} state - previous immutable state
+* @param {object} action - redux action
+* @return {object} newly created state
+*/
 export const postCommentNewReducer = (state={}, action) => {
   switch (action.type) {
     case `${types.POST_COMMENT_NEW}_LOADING`:
@@ -35,6 +40,13 @@ export const postCommentNewReducer = (state={}, action) => {
   }
 }
 
+
+/**
+* Redux reducer for the async postCommentIndexReducer action
+* @param {object} state - previous immutable state
+* @param {object} action - redux action
+* @return {object} newly created state
+*/
 export const postCommentIndexReducer = (state={}, action) => {
   switch (action.type) {
     case `${types.POST_COMMENT_INDEX}_LOADING`:
@@ -66,6 +78,13 @@ export const postCommentIndexReducer = (state={}, action) => {
   }
 }
 
+
+/**
+* Redux reducer for the async commentsNextPageReducer action
+* @param {object} state - previous immutable state
+* @param {object} action - redux action
+* @return {object} newly created state
+*/
 export const commentsNextPageReducer = (state={}, action) => {
 
   switch (action.type) {
@@ -99,6 +118,12 @@ export const commentsNextPageReducer = (state={}, action) => {
 }
 
 
+/**
+* Redux reducer for the addNewCommentReducer action
+* @param {object} state - previous immutable state
+* @param {object} action - redux action
+* @return {object} newly created state
+*/
 export const addNewCommentReducer = (state={}, action) => {
   switch (action.type) {
     case types.ADD_COMMENT_POST:

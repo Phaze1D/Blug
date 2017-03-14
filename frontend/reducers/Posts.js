@@ -1,6 +1,11 @@
 import * as types from '../actions/ActionTypes'
 
-
+/**
+* Redux reducer for the async postNew action
+* @param {object} state - previous immutable state
+* @param {object} action - redux action
+* @return {object} newly created state
+*/
 export const postNewReducer = (state={}, action) => {
   switch (action.type) {
     case `${types.POST_NEW}_LOADING`:
@@ -44,6 +49,13 @@ export const postNewReducer = (state={}, action) => {
   }
 }
 
+
+/**
+* Redux reducer for the async postEdit action
+* @param {object} state - previous immutable state
+* @param {object} action - redux action
+* @return {object} newly created state
+*/
 export const postEditReducer = (state={}, action) => {
   switch (action.type) {
     case `${types.POST_EDIT}_LOADING`:
@@ -72,6 +84,13 @@ export const postEditReducer = (state={}, action) => {
   }
 }
 
+
+/**
+* Redux reducer for the async postGet action
+* @param {object} state - previous immutable state
+* @param {object} action - redux action
+* @return {object} newly created state
+*/
 export const postGetReducer = (state={}, action) => {
   switch (action.type) {
     case `${types.POST_GET}_LOADING`:
@@ -102,6 +121,13 @@ export const postGetReducer = (state={}, action) => {
   }
 }
 
+
+/**
+* Redux reducer for the async postDelete action
+* @param {object} state - previous immutable state
+* @param {object} action - redux action
+* @return {object} newly created state
+*/
 export const postDeleteReducer = (state={}, action) => {
   switch (action.type) {
     case `${types.POST_DELETE}_LOADING`:
@@ -133,6 +159,12 @@ export const postDeleteReducer = (state={}, action) => {
 }
 
 
+/**
+* Redux reducer for the async postsNextPage action
+* @param {object} state - previous immutable state
+* @param {object} action - redux action
+* @return {object} newly created state
+*/
 export const postsNextPageReducer = (state={}, action) => {
   switch (action.type) {
     case `${types.POSTS_NEXT_PAGE}_LOADING`:
@@ -163,6 +195,13 @@ export const postsNextPageReducer = (state={}, action) => {
   }
 }
 
+
+/**
+* Redux reducer for the async postsIndex action
+* @param {object} state - previous immutable state
+* @param {object} action - redux action
+* @return {object} newly created state
+*/
 export const postsIndexReducer = (state={}, action) => {
   switch (action.type) {
     case `${types.POSTS_INDEX}_LOADING`:
@@ -191,6 +230,13 @@ export const postsIndexReducer = (state={}, action) => {
   }
 }
 
+
+/**
+* Redux reducer for the async search action
+* @param {object} state - previous immutable state
+* @param {object} action - redux action
+* @return {object} newly created state
+*/
 export const searchReducer = (state={}, action) => {
   switch (action.type) {
     case `${types.SEARCH}_LOADING`:
@@ -220,6 +266,12 @@ export const searchReducer = (state={}, action) => {
 }
 
 
+/**
+* Redux reducer for the async likeNew action
+* @param {object} state - previous immutable state
+* @param {object} action - redux action
+* @return {object} newly created state
+*/
 export const addNewPostReducer = (state={}, action) => {
 
   switch (action.type) {
@@ -234,6 +286,13 @@ export const addNewPostReducer = (state={}, action) => {
   }
 }
 
+
+/**
+* Redux reducer for the async addUpdatePost action
+* @param {object} state - previous immutable state
+* @param {object} action - redux action
+* @return {object} newly created state
+*/
 export const addUpdatePostReducer = (state={}, action) => {
   switch (action.type) {
     case types.ADD_UPDATE_POST:
@@ -250,6 +309,12 @@ export const addUpdatePostReducer = (state={}, action) => {
 }
 
 
+/**
+* Redux reducer for the async removePost action
+* @param {object} state - previous immutable state
+* @param {object} action - redux action
+* @return {object} newly created state
+*/
 export const removePostReducer = (state={}, action) => {
   switch (action.type) {
     case types.REMOVE_POST:

@@ -1,5 +1,11 @@
 import * as types from '../actions/ActionTypes'
 
+/**
+* Redux reducer for the async login action
+* @param {object} state - previous immutable state
+* @param {object} action - redux action
+* @return {object} newly created state
+*/
 export const loginReducer = (state={}, action) => {
   switch (action.type) {
     case `${types.LOGIN}_LOADING`:
@@ -40,6 +46,12 @@ export const loginReducer = (state={}, action) => {
   }
 }
 
+/**
+* Redux reducer for the async logout action
+* @param {object} state - previous immutable state
+* @param {object} action - redux action
+* @return {object} newly created state
+*/
 export const logoutReducer = (state={}, action) => {
   switch (action.type) {
     case `${types.LOGOUT}_LOADING`:
@@ -69,6 +81,12 @@ export const logoutReducer = (state={}, action) => {
   }
 }
 
+/**
+* Redux reducer for the async verify action
+* @param {object} state - previous immutable state
+* @param {object} action - redux action
+* @return {object} newly created state
+*/
 export const verifyReducer = (state={}, action) => {
   switch (action.type) {
     case `${types.SESSION_VERIFY}_LOADING`:
