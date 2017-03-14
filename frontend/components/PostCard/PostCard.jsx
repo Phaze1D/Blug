@@ -58,7 +58,6 @@ export default class PostCard extends React.Component{
 
   onDisliked(){
     this.setState({disliked: true, vd: this.state.vd + 1})
-
     this.props.dispatch(likeDelete(this.props.post.id))
     .then(() => this.setState({liked: false, vl: this.state.vl - 1 }) )
   }
@@ -127,7 +126,7 @@ export default class PostCard extends React.Component{
 
   onGlobalError(payload){
     if(payload.response){
-      this.props.dispatch(setGlobalError(payload.response.data.message, true))
+      hashHistory.push('/login')
     }else{
       this.props.dispatch(setGlobalError(payload.message, true))
     }
