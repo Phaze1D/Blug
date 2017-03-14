@@ -3,7 +3,6 @@ import reduceReducers from "reduce-reducers"
 
 import {
   userNewReducer,
-  userGetReducer
 } from './Users'
 
 import {
@@ -26,7 +25,6 @@ import {
 
 import {
   postCommentNewReducer,
-  commentEditReducer,
   postCommentIndexReducer,
   addNewCommentReducer,
   commentsNextPageReducer
