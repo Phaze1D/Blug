@@ -8,6 +8,12 @@ import {
 } from './ActionTypes'
 
 
+/**
+* Redux Async Action for creating a new comment
+* @param {string} post_id - The comments post's id
+* @param {string} comment - The comment's content
+* @return {object} The redux action
+*/
 export const postCommentNew = (post_id, comment) => {
   let data = new FormData();
   data.append('comment', comment)
@@ -19,17 +25,11 @@ export const postCommentNew = (post_id, comment) => {
 }
 
 
-export const commentEdit = (comment_id, comment) => {
-  let data = new FormData();
-  data.append('comment', comment)
-
-  return {
-    type: COMMENT_EDIT,
-    payload: axios.put(`/api/comment/${comment_id}`, data)
-  }
-}
-
-
+/**
+* Redux Async Action for fetching the first 8 post's comments
+* @param {string} post_id
+* @return {object} The redux action
+*/
 export const postCommentIndex = (post_id) => {
   return {
     type: POST_COMMENT_INDEX,
@@ -37,6 +37,13 @@ export const postCommentIndex = (post_id) => {
   }
 }
 
+
+/**
+* Redux Async Action for fetching the next 8 comments of a post
+* @param {string} post_id
+* @param {string} cursor - a urlsafe string that represents the next page
+* @return {object} The redux action
+*/
 export const commentsNextPage = (post_id, cursor) => {
   return {
     type: COMMENTS_NEXT_PAGE,
@@ -49,6 +56,11 @@ export const commentsNextPage = (post_id, cursor) => {
 }
 
 
+/**
+* Redux Action for adding a newly created comment to the comments array
+* @param {object} comment - The comment to be added
+* @return {object} The redux action
+*/
 export const addNewComment = (comment) => {
   return {
     type: ADD_COMMENT_POST,

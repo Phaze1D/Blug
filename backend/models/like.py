@@ -23,7 +23,6 @@ class Like(ndb.Model):
 
         Returns:
             True if user and post exist and the user is not the owner of the post
-
         """
 
         user = User.get_by_id(self.user.id())

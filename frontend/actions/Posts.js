@@ -14,7 +14,13 @@ import {
 } from './ActionTypes'
 
 
-export const postNew = (title='', content='') => {
+/**
+* Redux async action for creating a new post
+* @param {string} title - The title of the new post
+* @param {string} content - The content of the new post
+* @return {object} The redux action
+*/
+export const postNew = (title, content) => {
   let data = new FormData();
   data.append('title', title)
   data.append('content', content)
@@ -25,6 +31,14 @@ export const postNew = (title='', content='') => {
   }
 }
 
+
+/**
+* Redux async action for editing a post
+* @param {string} post_id - The id of the post that will be edited
+* @param {string} title - The title of the post
+* @param {string} content - The content of the post
+* @return {object} The redux action
+*/
 export const postEdit = (post_id, title, content) => {
   let data = new FormData();
   data.append('title', title)
@@ -35,6 +49,12 @@ export const postEdit = (post_id, title, content) => {
   }
 }
 
+
+/**
+* Redux async action for fetching a post
+* @param {string} post_id - The id of the post that will be fetched
+* @return {object} The redux action
+*/
 export const postGet = (post_id) => {
   return {
     type: POST_GET,
@@ -42,6 +62,12 @@ export const postGet = (post_id) => {
   }
 }
 
+
+/**
+* Redux async action for deleting a post
+* @param {string} post_id - The id of the post that will be deleted
+* @return {object} The redux action
+*/
 export const postDelete = (post_id) => {
   return {
     type: POST_DELETE,
@@ -49,6 +75,10 @@ export const postDelete = (post_id) => {
   }
 }
 
+/**
+* Redux async action for fetching the first 15 posts
+* @return {object} The redux action
+*/
 export const postsIndex = () => {
   return {
     type: POSTS_INDEX,
@@ -56,6 +86,12 @@ export const postsIndex = () => {
   }
 }
 
+
+/**
+* Redux async action for searching for posts
+* @param {string} search - The search query
+* @return {object} The redux action
+*/
 export const search = (search) => {
   return {
     type: SEARCH,
@@ -67,6 +103,13 @@ export const search = (search) => {
   }
 }
 
+
+/**
+* Redux async action for fetching the next 15 posts
+* @param {string} cursor - The cursor that represents the next 15 posts
+* @param {string} search - The search query || null
+* @return {object} The redux action
+*/
 export const postsNextPage = (cursor, search=null) => {
   return {
     type: POSTS_NEXT_PAGE,
@@ -80,6 +123,11 @@ export const postsNextPage = (cursor, search=null) => {
 }
 
 
+/**
+* Redux action for adding a newly created post into the posts array
+* @param {object} post - The post to be added
+* @return {object} The redux action
+*/
 export const addNewPost = (post) => {
   return {
     type: ADD_NEW_POST,
@@ -87,6 +135,13 @@ export const addNewPost = (post) => {
   }
 }
 
+
+/**
+* Redux action for adding an updated post to the posts array
+* @param {object} post - The post to be updated
+* @param {int} index - The index in the post's array to be overrided
+* @return {object} The redux action
+*/
 export const addUpdatePost = (post, index) => {
   return {
     type: ADD_UPDATE_POST,
@@ -94,6 +149,12 @@ export const addUpdatePost = (post, index) => {
   }
 }
 
+
+/**
+* Redux action for removing a post from the post's array
+* @param {int} index - The index of the post to be removed
+* @return {object} redux action
+*/
 export const removePost = (index) => {
   return {
     type: REMOVE_POST,

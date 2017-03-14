@@ -4,7 +4,13 @@ import {
   USER_GET
 } from './ActionTypes'
 
-
+/**
+* Redux async action for creating a new userNew
+* @param {string} username
+* @param {string} password
+* @param {string} email
+* @return {object} Redux action
+*/
 export const userNew = (username, password, email) => {
   let data = new FormData();
   data.append('username', username)
@@ -17,6 +23,12 @@ export const userNew = (username, password, email) => {
   }
 }
 
+
+/**
+* Redux async action for fetching a user by username
+* @param {string} username - The username to be fetched
+* @return {object} Redux action
+*/
 export const userGet = (username) => {
   return {
     type: USER_GET,

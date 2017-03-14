@@ -28,14 +28,23 @@ export const COMMENTS_NEXT_PAGE  = 'COMMENTS_NEXT_PAGE'
 
 
 
-
+/**
+* Redux Action to reset all errors of a specfic form
+* @param {string} type - The form to be resetError
+* @return {object} The redux action
+*/
 export const resetErrors = (type) => {
   return {
     type: `${RESET_ERRORS}_${type}`
   }
 }
 
-
+/**
+* Redux Action to set a global error message
+* @param {string} message - The error message
+* @param {boolean} show - Whether to show the error box
+* @return {object} The redux action
+*/
 export const setGlobalError = (message, show) => {
   return {
     type: SET_GLOBAL_ERROR,

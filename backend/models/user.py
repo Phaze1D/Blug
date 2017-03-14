@@ -16,6 +16,7 @@ class User(ndb.Model):
         email: The user's email
         created: The date it was created
     """
+    
     username = ndb.StringProperty(required=True)
     password = ndb.StringProperty(required=True)
     email = ndb.StringProperty(required=True)
@@ -30,6 +31,7 @@ class User(ndb.Model):
         Returns:
             True if no errors found
         """
+
         if bool(self.__username_errors()) or bool(self.__password_errors()) or bool(self.__email_errors()):
             return False
         return True
@@ -40,6 +42,7 @@ class User(ndb.Model):
         Returns:
             Dictionary of arrays of error strings
         """
+
         return {
             'username': self.__username_errors(),
             'password': self.__password_errors(),
@@ -53,6 +56,7 @@ class User(ndb.Model):
         Return:
             Dictionary without the password field
         """
+
         sdict = self.to_dict()
         sdict.pop('password')
         sdict['id'] = self.key.id()
@@ -89,6 +93,7 @@ class User(ndb.Model):
         Returns:
             Hashed sha512 Password with salt and pepper ;)
         """
+
         if not salt:
             salt = ''.join([random.choice(string.lowercase) for i in xrange(8)])
         hashed = hashlib.sha512(password + salt).hexdigest()
@@ -135,6 +140,7 @@ class User(ndb.Model):
         Return:
             An array of string corrsponding to an error message
         """
+
         errors = []
         if bool(self.username):
             if not bool(re.match("^[a-zA-Z0-9_-]{3,42}$", self.username)):
@@ -152,6 +158,7 @@ class User(ndb.Model):
         Return:
             An array of string corrsponding to an error message
         """
+
         errors = []
         if bool(self.password):
             if not bool(re.match("^(?=.{6,})", self.password)):
@@ -173,6 +180,7 @@ class User(ndb.Model):
         Return:
             An array of string corrsponding to an error message
         """
+
         errors = []
         if bool(self.email):
             if not bool(re.match("(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", self.email)):

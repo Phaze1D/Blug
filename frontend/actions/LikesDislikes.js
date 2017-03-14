@@ -7,7 +7,11 @@ import {
 } from '../actions/ActionTypes'
 
 
-
+/**
+* Redux Async Action for creating a new like
+* @param {string} post_id - the id of the post to be like
+* @return the redux action
+*/
 export const likeNew = (post_id) => {
   return {
     type: LIKE_NEW,
@@ -15,6 +19,12 @@ export const likeNew = (post_id) => {
   }
 }
 
+
+/**
+* Redux Async Action for deleting a like
+* @param {string} post_id - the id of the post to be unliked
+* @return the redux action
+*/
 export const likeDelete = (post_id) => {
   return {
     type: LIKE_DELETE,
@@ -23,6 +33,11 @@ export const likeDelete = (post_id) => {
 }
 
 
+/**
+* Redux Async Action for creating a new dislike
+* @param {string} post_id - the id of the post to be dislike
+* @return the redux action
+*/
 export const dislikeNew = (post_id) => {
   return {
     type: DISLIKE_NEW,
@@ -31,6 +46,11 @@ export const dislikeNew = (post_id) => {
 }
 
 
+/**
+* Redux Async Action for deleting a dislike
+* @param {string} post_id - the id of the post to be undisliked
+* @return the redux action
+*/
 export const dislikeDelete = (post_id) => {
   return {
     type: DISLIKE_DELETE,
