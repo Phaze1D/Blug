@@ -46,10 +46,6 @@ const currentUserReducer = reduceReducers(
   verifyReducer
 )
 
-const userReducer = reduceReducers(
-  userGetReducer
-)
-
 const postReducer = reduceReducers(
   postNewReducer,
   postEditReducer,
@@ -67,7 +63,6 @@ const postsReducer = reduceReducers(
 
 const commentReducer = reduceReducers(
   postCommentNewReducer,
-  commentEditReducer
 )
 
 const commentsReducer = reduceReducers(
@@ -88,7 +83,6 @@ const dislikeReducer = reduceReducers(
 
 export default combineReducers({
   currentUser: currentUserReducer,
-  user: userReducer,
   post: postReducer,
   posts: postsReducer,
   comment: commentReducer,
