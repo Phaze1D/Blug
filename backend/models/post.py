@@ -184,7 +184,7 @@ class Post(ndb.Model):
         Args:
             key: The Post Entity Key that will be deleted
         """
-	    search.Index('api-post').delete(str(key.id()))
+        search.Index('api-post').delete(str(key.id()))
 
 
 ### Private Instance Methods
@@ -242,7 +242,7 @@ class Post(ndb.Model):
         Return:
             An array of string corrsponding to an error message
         """
-        
+
         errors = []
         if bool(self.content):
             if not bool(re.match("^[\s\S]{3,1024}$", self.content)):
@@ -253,13 +253,18 @@ class Post(ndb.Model):
 
 
 def pieces(string):
+    """ This method produces pieces of 'TEXT' as 'T,TE,TEX,TEXT'
+
+    Args:
+        string: The string to break apart
+    """
     pieces = []
 
     for word in string.split():
         cursor = 1
-    while True:
-        pieces.append(word[:cursor])
-        if cursor == len(word): break
-        cursor += 1
+        while True:
+            pieces.append(word[:cursor])
+            if cursor == len(word): break
+            cursor += 1
 
     return ','.join(pieces)
