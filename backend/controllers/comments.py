@@ -7,9 +7,10 @@ from backend.errors.form_exception import FormException
 from backend.errors.login_exception import LoginException
 from backend.errors.owner_exception import OwnerException
 
-
+import time
 class CommentsController():
     def index(self, post_id):
+        # time.sleep(5)
         json_results = Comment.index_page_json(post_id=post_id, cursor=request.args.get('cursor'))
         return jsonify(**json_results)
 

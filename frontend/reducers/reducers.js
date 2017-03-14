@@ -27,7 +27,9 @@ import {
 import {
   postCommentNewReducer,
   commentEditReducer,
-  postCommentIndexReducer
+  postCommentIndexReducer,
+  addNewCommentReducer,
+  commentsNextPageReducer
 } from './Comments'
 
 import {
@@ -71,7 +73,9 @@ const commentReducer = reduceReducers(
 )
 
 const commentsReducer = reduceReducers(
-  postCommentIndexReducer
+  postCommentIndexReducer,
+  addNewCommentReducer,
+  commentsNextPageReducer
 )
 
 const likeReducer = reduceReducers(

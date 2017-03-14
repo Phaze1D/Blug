@@ -26,10 +26,11 @@ export default class Intro extends React.Component{
   render(){
     const {
       currentUser,
-      posts
+      posts,
+      comments
     } = this.props
 
-    const showBar = currentUser.verifing || posts.fetching || currentUser.fetching
+    const showBar = currentUser.verifing || posts.fetching || currentUser.fetching || comments.fetching
 
     return(
       <MuiThemeProvider muiTheme={mtheme}>

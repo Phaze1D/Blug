@@ -7,7 +7,6 @@ export const postNewReducer = (state={}, action) => {
       return {
         ...state,
         fetching: true,
-        success: false,
         post: null,
         errors: null
       }
@@ -16,7 +15,6 @@ export const postNewReducer = (state={}, action) => {
       return {
         ...state,
         fetching: false,
-        success: true,
         post: action.payload.data,
         errors: null
       }
@@ -26,7 +24,6 @@ export const postNewReducer = (state={}, action) => {
       return {
         ...state,
         fetching: false,
-        success: false,
         post: null,
         errors: action.payload.response.data
       }
@@ -34,7 +31,6 @@ export const postNewReducer = (state={}, action) => {
     case `${types.RESET_ERRORS}_POST`:
       return {
         ...state,
-        success: false,
         errors: null
       }
 
@@ -54,7 +50,6 @@ export const postEditReducer = (state={}, action) => {
       return {
         ...state,
         fetching: true,
-        success: false,
         errors: null
       }
 
@@ -62,7 +57,6 @@ export const postEditReducer = (state={}, action) => {
       return {
         ...state,
         fetching: false,
-        success: true,
         post: action.payload.data,
         errors: null
       }
@@ -71,7 +65,6 @@ export const postEditReducer = (state={}, action) => {
       return {
         ...state,
         fetching: false,
-        success: false,
         errors: action.payload.response.data
       }
 

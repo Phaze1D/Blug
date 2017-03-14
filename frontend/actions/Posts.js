@@ -80,8 +80,6 @@ export const postsNextPage = (cursor, search=null) => {
 }
 
 
-
-
 export const addNewPost = (post) => {
   return {
     type: ADD_NEW_POST,

@@ -23,6 +23,9 @@ export const POST_DELETE         = 'POST_DELETE'
 export const SEARCH              = 'SEARCH'
 export const POSTS_NEXT_PAGE     = 'POSTS_NEXT_PAGE'
 export const SET_GLOBAL_ERROR    = 'SET_GLOBAL_ERROR'
+export const ADD_COMMENT_POST    = 'ADD_COMMENT_POST'
+export const COMMENTS_NEXT_PAGE  = 'COMMENTS_NEXT_PAGE'
+
 
 
 

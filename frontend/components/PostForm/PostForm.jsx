@@ -8,6 +8,7 @@ import ContentClear from 'material-ui/svg-icons/content/clear'
 import ActionDone from 'material-ui/svg-icons/action/done'
 import classnames from 'classnames'
 import { connect } from 'react-redux'
+import { hashHistory } from 'react-router'
 import { postNew, postEdit, addNewPost, addUpdatePost } from '../../actions/Posts'
 import { resetErrors } from '../../actions/ActionTypes'
 
@@ -36,10 +37,10 @@ export default class PostForm extends React.Component{
 
     if(this.props.updateIndex >= 0){
       this.props.dispatch(postEdit(this.props.post.post.id, title, content))
-      .then(this.onPostSuccess.bind(this), this.onGlobalError.bind(this))
+      .then(this.onPostSuccess.bind(this), this.onPostFailed.bind(this))
     }else{
       this.props.dispatch(postNew(title, content))
-      .then(this.onPostSuccess.bind(this), this.onGlobalError.bind(this))
+      .then(this.onPostSuccess.bind(this), this.onPostFailed.bind(this))
     }
 
   }
@@ -53,11 +54,9 @@ export default class PostForm extends React.Component{
     this.props.onRequestChange()
   }
 
-  onGlobalError(payload){
-    if(payload.response){
-      // this.props.dispatch(setGlobalError(payload.response.data.message, true))
-    }else{
-      this.props.dispatch(setGlobalError(payload.message, true))
+  onPostFailed(payload){
+    if(payload.response.status == 412){
+      hashHistory.push('/login')
     }
   }
 

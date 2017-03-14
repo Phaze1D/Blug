@@ -5,10 +5,12 @@ from backend.models.post import Post
 from backend.models.user import User
 import re
 
+import logging
 
 class Comment(ndb.Model):
     post = ndb.KeyProperty(kind='Post', required=True)
     user = ndb.KeyProperty(kind='User', required=True)
+    username = ndb.StringProperty(required=True)
     comment = ndb.TextProperty(required=True)
     created = ndb.DateTimeProperty(auto_now_add=True)
 
@@ -35,14 +37,14 @@ class Comment(ndb.Model):
 ### Class Methods
 
     @classmethod
-    def index_page_json(cls, post_id, cursor=None, per_page=15):
+    def index_page_json(cls, post_id, cursor=None, per_page=8):
         cursor = Cursor(urlsafe=cursor)
-        comments, next_cursor, more = cls \
-        .query(cls.post == ndb.Key('Post', long(post_id))) \
-        .fetch_page(per_page, start_cursor=cursor)
+        comments, next_cursor, more = cls.query(
+            cls.post == ndb.Key('Post', long(post_id))
+        ).order(-cls.created).fetch_page(per_page, start_cursor=cursor)
 
         nc = next_cursor.urlsafe() if bool(next_cursor) else ''
-        results = {'cursor': nc, 'more': more, 'comments': []}
+        results = {'cursor': nc, 'more': more, 'comments': [], 'comments_post_id': post_id}
 
         for comment in comments:
             cd = comment.to_dict()
@@ -59,6 +61,7 @@ class Comment(ndb.Model):
     def _pre_put_hook(self):
         if not bool(self.key.id()):
             self.user=ndb.Key(User, long( current_user_id() ) )
+            self.username = self.user.get().username
 
     def __comment_errors(self):
         errors = []
