@@ -6,7 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import CircularProgress from 'material-ui/CircularProgress';
 
 
-
+/** React Component representing the comment section of a PostCard */
 export default class CommentSection extends React.Component{
   constructor(props){
     super(props)
@@ -17,6 +17,7 @@ export default class CommentSection extends React.Component{
 
 
   componentWillReceiveProps(nextProps) {
+    // Handles the open and close animation for the comment section
     if(!this.props.open && nextProps.open){
       this.setState({height: this.refs.wrapper.clientHeight})
       setTimeout(() => this.setState({height: 'auto'}), 500)
@@ -26,16 +27,28 @@ export default class CommentSection extends React.Component{
     }
   }
 
+
+  /**
+  * Submit handler for the comment form
+  * @param {object} event
+  */
   handleNewSubmit(event){
     event.preventDefault()
     let value = event.target.elements['comment'].value
     this.props.onRequestNewComment(value)
   }
 
+
+  /**
+  * Callback method for when a comment is submitted
+  * Resets the form value
+  */
   onSuccesComment(){
     this.setState({value: ''})
     setTimeout(() => this.setState({value: undefined}), 500)
   }
+
+
 
   render(){
     let error = this.props.errors && this.props.errors.comment ? this.props.errors.comment[0] : null

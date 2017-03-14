@@ -5,18 +5,21 @@ import LinearProgress from 'material-ui/LinearProgress'
 import Theme from '../../utils/Theme.js'
 import { connect } from 'react-redux'
 
-
 const mtheme = getMuiTheme(Theme)
 
+/** connect to the entire redux store */
 @connect((store) => {
   return store
 })
+
+/** React Component  representing the intro animation and initialize the app */
 export default class Intro extends React.Component{
   constructor(props){
     super(props)
   }
 
   componentDidMount() {
+    // Removes the intro screen afte 1 second
     setTimeout( () => {
       document.getElementById('top').style.transform = 'translate(0,-110%)'
       document.getElementById('bottom').style.transform = 'translate(0,110%)'

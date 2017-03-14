@@ -12,24 +12,36 @@ import { hashHistory } from 'react-router'
 import { postNew, postEdit, addNewPost, addUpdatePost } from '../../actions/Posts'
 import { resetErrors } from '../../actions/ActionTypes'
 
-
+/** connects to redux post object*/
 @connect((store) => {
   return {
     post: store.post
   }
 })
+
+/** React Component representing the right drawer and the post form */
 export default class PostForm extends React.Component{
   constructor(props){
     super(props)
   }
 
 
+  /**
+  * Handler method for when the overlay is clicked
+  * @param {object} event
+  */
   handleOverlayClick(event){
     if(event.target.classList.contains('overlay')){
       this.props.onRequestChange()
     }
   }
 
+
+  /**
+  * Submit handler for the for. This handles both update and create
+  * This dispatches postEdit or postNew actions
+  * @param {object} event
+  */
   handleSubmit(event){
     event.preventDefault()
     let title = document.getElementById('title').value
@@ -45,6 +57,12 @@ export default class PostForm extends React.Component{
 
   }
 
+
+  /**
+  * Callback method for the postEdit or postNew action
+  * if they are successful
+  * This dispatches the addUpdatePost or addNewPost actions
+  */
   onPostSuccess(){
     if(this.props.updateIndex >= 0){
       this.props.dispatch(addUpdatePost(this.props.post.post, this.props.updateIndex))
@@ -54,12 +72,23 @@ export default class PostForm extends React.Component{
     this.props.onRequestChange()
   }
 
+
+  /**
+  * Callback method for when the postEdit or postNew action fails
+  * Redirects the user if not logged in
+  */
   onPostFailed(payload){
     if(payload.response.status == 412){
       hashHistory.push('/login')
     }
   }
 
+
+  /**
+  * Handler for the focus event
+  * This dispatch the resetErrors for post form
+  * @param {object} event
+  */
   handleOnFocus(event){
     this.props.dispatch(resetErrors("POST"))
   }
@@ -113,6 +142,7 @@ export default class PostForm extends React.Component{
 }
 
 
+/** React Component that represents the form fields */
 const FormFields = (props) => {
   let titleError = props.errors && props.errors.title ? props.errors.title[0] : null
   let contentError = props.errors && props.errors.content ? props.errors.content[0] : null

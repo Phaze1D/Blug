@@ -15,12 +15,17 @@ import { verify, logout } from '../../actions/Sessions'
 import { setGlobalError } from '../../actions/ActionTypes'
 
 
+/** connect to the currentUser and global error on the redux store */
 @connect((store) => {
   return {
     currentUser: store.currentUser,
     gerror: store.gerror
   }
 })
+
+/** React Component representing the layout of the app with the left and
+*   right drawers and the FAB and toolbar
+*/
 export default class Layout extends React.Component{
   constructor(props){
     super(props)
@@ -31,6 +36,11 @@ export default class Layout extends React.Component{
     this.props.dispatch(verify())
   }
 
+
+  /**
+  * Toggle event for the search bar
+  * @param {object} event
+  */
   toggleSearch(event){
     if(this.state.searchOpen){
       this.props.onRequestSearchClear(event)
@@ -39,30 +49,61 @@ export default class Layout extends React.Component{
   }
 
 
+  /**
+  * Toggle event for the left menu drawer
+  * @param {object} event
+  */
   toggleMenu(event){
     this.setState({menuOpen: !this.state.menuOpen})
   }
 
+
+  /**
+  * Handler for the logout event. This dispatches the logout action
+  * @param {object} event
+  */
   handleLogout(event){
     this.setState({menuOpen: false})
     this.props.dispatch(logout())
       .then(this.onLogout.bind(this), this.onGlobalError.bind(this))
   }
 
+
+  /**
+  * Callback method if the logout action succeeded.
+  * Redirects to the login page
+  */
   onLogout(){
     hashHistory.push('/login')
   }
 
+
+  /**
+  * Handler for the login button event. Called when the login button on
+  * the menu drawer is pressed. Redirects to the login page
+  * @param {object} event
+  */
   handleLogin(event){
     this.setState({menuOpen: false})
     hashHistory.push('/login')
   }
 
+
+  /**
+  * Submit Handler for the search form
+  * @param {object} event
+  */
   handleSearchSubmit(event){
     event.preventDefault()
     this.props.onRequestSearchSubmit(event)
   }
 
+
+  /**
+  * Callback method for when any async action fails. This sets a new global
+  * error from http response
+  * @param {object} payload - The http response
+  */
   onGlobalError(payload){
     if(payload.response){
       this.props.dispatch(setGlobalError(payload.response.data.message, true))
@@ -71,9 +112,16 @@ export default class Layout extends React.Component{
     }
   }
 
+
+  /**
+  * Callback method for when the global error box disappears
+  * This just sets the global redux object to show false
+  */
   onErrorShown(){
     this.props.dispatch(setGlobalError(this.props.gerror.error, false))
   }
+
+
 
   render(){
     const {
@@ -127,12 +175,3 @@ export default class Layout extends React.Component{
     )
   }
 }
-
-
-// <nav className='nav-bar'>
-//   <ul>
-//     <li className='active'><Link to='/posts?page=top'>Top</Link></li>
-//     <li><Link to='/posts?page=trending'>Trending</Link></li>
-//     <li><Link to='/posts?page=recent'>Recent</Link></li>
-//   </ul>
-// </nav>

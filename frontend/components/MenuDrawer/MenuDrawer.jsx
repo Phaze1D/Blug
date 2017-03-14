@@ -7,13 +7,17 @@ import MenuItem from 'material-ui/MenuItem'
 import classnames from 'classnames'
 
 
-
+/** React Component representing the left menu drawer */
 export default class MenuDrawer extends React.Component{
   constructor(props){
     super(props)
 
   }
 
+  /**
+  * Handler for when the ovelay is click so as to close the drawer
+  * @param {object} event
+  */
   handleOverlayClick(event){
     if(event.target.classList.contains('overlay')){
       this.props.onRequestChange()

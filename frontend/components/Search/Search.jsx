@@ -8,7 +8,7 @@ import classnames from 'classnames'
 
 
 
-
+/** React Component representing the search bar */
 export default class Search extends React.Component{
   constructor(props){
     super(props);

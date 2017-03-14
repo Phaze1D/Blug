@@ -11,12 +11,14 @@ import { resetErrors } from '../../actions/ActionTypes'
 
 
 
-
+/** connects to redux currentUser object */
 @connect((store) => {
   return{
     currentUser: store.currentUser
   }
 })
+
+/** React Component representing the login page */
 export default class Sessions extends React.Component{
   constructor(props){
     super(props)
@@ -24,26 +26,36 @@ export default class Sessions extends React.Component{
   }
 
   componentWillMount(){
+    // dispatches the verify action
     this.props.dispatch(verify()).then(this.onLoggedIn.bind(this), this.onGlobalError.bind(this))
   }
 
+
+  /**
+  * Callback for the verify action
+  * Redirects if user is loggedIn
+  */
   onLoggedIn(){
     hashHistory.push('/posts');
   }
 
-  onGlobalError(payload){
-    if(payload.response){
-      // this.props.dispatch(setGlobalError(payload.response.data.message, true))
-    }else{
-      this.props.dispatch(setGlobalError(payload.message, true))
-    }
-  }
 
+  /**
+  * Handler switching between login form and signup form
+  * dispatch resetErrors for SESSION
+  * @param {object} event
+  */
   handleV2Tap(event){
     this.setState({isLoginForm: !this.state.isLoginForm})
     this.props.dispatch(resetErrors('SESSION'))
   }
 
+
+  /**
+  * Submit handler for when the login or sign up
+  * dispatches the login or userNew action
+  * @param {object} event
+  */
   handleSubmit(event){
     event.preventDefault()
     let username = document.getElementById('username').value
@@ -55,6 +67,20 @@ export default class Sessions extends React.Component{
     }else{
       this.props.dispatch(userNew(username, password, email))
       .then(this.onLoggedIn.bind(this), this.onGlobalError.bind(this))
+    }
+  }
+
+
+  /**
+  * Callback for when any async actions fails
+  * dispatches setGlobalError
+  * @param {object} payload - http responses
+  */
+  onGlobalError(payload){
+    if(payload.response){
+      // this.props.dispatch(setGlobalError(payload.response.data.message, true))
+    }else{
+      this.props.dispatch(setGlobalError(payload.message, true))
     }
   }
 

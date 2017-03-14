@@ -19,7 +19,7 @@ import { postCommentNew, postCommentIndex, addNewComment, commentsNextPage } fro
 import { setGlobalError, resetErrors } from '../../actions/ActionTypes'
 
 
-
+/** connects to redux like, dislike, comment, and comments objects */
 @connect( (store) => {
   return {
     like: store.like,
@@ -28,6 +28,7 @@ import { setGlobalError, resetErrors } from '../../actions/ActionTypes'
     comments: store.comments
   }
 })
+/** React Component that represents a single Post card */
 export default class PostCard extends React.Component{
   constructor(props){
     super(props)
@@ -40,49 +41,96 @@ export default class PostCard extends React.Component{
     }
   }
 
+
   componentWillReceiveProps(nextProps) {
+    // Close the comment section if the comments array does not belong to the
+    // post corrosponding to this PostCard
     if(nextProps.comments.comments_post_id != this.props.post.id){
       this.setState({copen: false})
     }
   }
 
+
+  /**
+  * Handler method for when the edit button is click
+  * @param {object} event
+  */
   handleEdit(event){
     this.props.onRequestEdit(this.props.post.id, this.props.index)
   }
 
+
+  /**
+  * Handler method for when the dislike button is click
+  * This dispatches the dislikeNew action
+  * @param {object} event
+  */
   handleDislike(event){
     event.preventDefault()
     this.props.dispatch(dislikeNew(this.props.post.id))
     .then(this.onDisliked.bind(this), this.onGlobalError.bind(this))
   }
 
+
+  /**
+  * Callback function for when the dislikeNew action is successful
+  * This dispatches the likeDelete action
+  */
   onDisliked(){
     this.setState({disliked: true, vd: this.state.vd + 1})
     this.props.dispatch(likeDelete(this.props.post.id))
     .then(() => this.setState({liked: false, vl: this.state.vl - 1 }) )
   }
 
+
+  /**
+  * Handler method for when the like button is click
+  * This dispatches the likeNew action
+  * @param {object} event
+  */
   handleLike(event){
     event.preventDefault()
     this.props.dispatch(likeNew(this.props.post.id))
     .then(this.onLiked.bind(this), this.onGlobalError.bind(this))
   }
 
+
+  /**
+  * Callback function for when the likeNew action is successful
+  * This dispatches the dislikeDelete action
+  */
   onLiked(){
     this.setState({liked: true, vl: this.state.vl + 1})
     this.props.dispatch( dislikeDelete(this.props.post.id) )
     .then(() => this.setState({disliked: false, vd: this.state.vd - 1}))
   }
 
+
+  /**
+  * Handler method for when the delete button is click
+  * This dispatches the postDelete action
+  * @param {object} event
+  */
   handleDelete(event){
     this.props.dispatch(postDelete(this.props.post.id))
     .then(this.onDeleted.bind(this), this.onGlobalError.bind(this))
   }
 
+
+  /**
+  * Callback function for when the postDelete action is successful
+  * This dispatches the removePost action
+  */
   onDeleted(){
     this.props.dispatch(removePost(this.props.index))
   }
 
+
+  /**
+  * Handler method for toggling the comments section
+  * This dispatches the postCommentIndex action
+  * @param {object} event
+  */
   toggleComments(event){
     if(!this.state.copen){
       this.props.dispatch(postCommentIndex(this.props.post.id))
@@ -92,6 +140,11 @@ export default class PostCard extends React.Component{
     }
   }
 
+
+  /**
+  * Callback function for when the postCommentIndex action is successful
+  * This dispatches the resetErrors action on the comment form
+  */
   onReceivedComments(){
     if(this.props.comments.comments_post_id == this.props.post.id){
       this.props.dispatch(resetErrors("COMMENT"))
@@ -99,38 +152,77 @@ export default class PostCard extends React.Component{
     }
   }
 
+
+  /**
+  * Handler method for when a new comment is submited
+  * This dispatches the postCommentNew action
+  * @param {object} event
+  */
   handleNewCommentSubmit(value){
     this.props.dispatch(postCommentNew(this.props.post.id, value))
     .then(this.onCommentSubmited.bind(this), this.onCommentFailed.bind(this))
   }
 
+
+  /**
+  * Callback function for when the postCommentNew action is successful
+  * This dispatches the addNewComment action for adding a comment to
+  * the comments array
+  */
   onCommentSubmited(){
     this.refs.commentSection.onSuccesComment()
     this.props.dispatch(addNewComment(this.props.comment.comment))
   }
 
+
+  /**
+  * Callback function for when the postCommentNew action failed
+  * This Redirects the user to the login page
+  */
   onCommentFailed(payload){
     if(payload.response.status == 412){
       hashHistory.push('/login')
     }
   }
 
+
+  /**
+  * Handler method for when the comment form is focus
+  * This resets the comment errors
+  * @param {object} event
+  */
   handleCommentFocus(event){
     this.props.dispatch(resetErrors("COMMENT"))
   }
 
+
+  /**
+  * Handler method for when the user clicks on load more bottom
+  * This dispatches the commentsNextPage action
+  * @param {object} event
+  */
   handleMoreComments(event){
     this.props.dispatch(commentsNextPage(this.props.post.id, this.props.comments.cursor))
     .then(null, this.onGlobalError.bind(this))
   }
 
+
+  /**
+  * Sets the global error
+  * @param {object} payload - http response
+  */
   onGlobalError(payload){
-    if(payload.response.status == 412){
-      hashHistory.push('/login')
+    if(payload.response){
+      if(payload.response.status == 412){
+        hashHistory.push('/login')
+      }else{
+        this.props.dispatch(setGlobalError(payload.response.data.message, true))
+      }
     }else{
       this.props.dispatch(setGlobalError(payload.message, true))
     }
   }
+
 
   render(){
     const {

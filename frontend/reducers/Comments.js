@@ -35,24 +35,6 @@ export const postCommentNewReducer = (state={}, action) => {
   }
 }
 
-export const commentEditReducer = (state={}, action) => {
-  switch (action.type) {
-    case `${types.COMMENT_EDIT}_LOADING`:
-
-      break;
-
-    case `${types.COMMENT_EDIT}_SUCCESS`:
-
-      break;
-
-    case `${types.COMMENT_EDIT}_ERROR`:
-
-      break;
-
-    default: return state
-  }
-}
-
 export const postCommentIndexReducer = (state={}, action) => {
   switch (action.type) {
     case `${types.POST_COMMENT_INDEX}_LOADING`:
@@ -81,20 +63,6 @@ export const postCommentIndexReducer = (state={}, action) => {
       }
 
     default: return state
-  }
-}
-
-
-export const addNewCommentReducer = (state={}, action) => {
-  switch (action.type) {
-    case types.ADD_COMMENT_POST:
-      return {
-        ...state,
-        comments: [action.payload].concat(state.comments)
-      }
-
-    default: return state
-
   }
 }
 
@@ -127,5 +95,19 @@ export const commentsNextPageReducer = (state={}, action) => {
       }
 
     default: return state
+  }
+}
+
+
+export const addNewCommentReducer = (state={}, action) => {
+  switch (action.type) {
+    case types.ADD_COMMENT_POST:
+      return {
+        ...state,
+        comments: [action.payload].concat(state.comments)
+      }
+
+    default: return state
+
   }
 }
