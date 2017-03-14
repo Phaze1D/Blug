@@ -12,7 +12,7 @@ import {userNew} from './actions/Users'
 
 import './index.sass'
 
-
+/** Initializes app */
 document.addEventListener("DOMContentLoaded", function(event) {
   injectTapEventPlugin()
 
