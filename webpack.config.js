@@ -3,8 +3,8 @@ var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 
-var SCRIPTS_PATH = 'backend/static/scripts';
-var TEMPLATES_PATH = 'backend/templates';
+var SCRIPTS_PATH = path.resolve(__dirname,'backend/static/scripts');
+var TEMPLATES_PATH = './backend/templates';
 
 
 var config = {
