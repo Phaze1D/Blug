@@ -4,8 +4,8 @@
 This is a simple blog concept app built for the Udacity Fullstack Nanodegree Program. I use the Flask framework for handling the backend and React/Redux for handling the frontend. The data is stored with [Google's Cloud Datastore](https://cloud.google.com/datastore/), a NoSQL database, and it is hosted on [Google's App Engine](https://cloud.google.com/appengine/), a PaaS. You can view the live version [here](https://blog-160318.appspot.com/).
 
 <p align="center">
-	<img src="readme_imgs/screenshot1.png" height="150px"/>
-	<img src="readme_imgs/screenshot2.png" height="150px"/>
+	<img src="readme_imgs/screenshot1.png" height="250px"/>
+	<img src="readme_imgs/screenshot2.png" height="250px"/>
 </p>
 
 ## Development
