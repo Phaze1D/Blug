@@ -12,7 +12,7 @@ This is a simple blog concept app built for the Udacity Fullstack Nanodegree Pro
 The app consists of the basics parts of a blog. Users can log in and signup (no password reset), they can create and edit a post, they can search for a post, and they can comment, like and dislike a post.
 
 ### Usage
-If you would like to modify or test the app locally just run this steps to get started.
+If you would like to modify or test the app locally just run these steps to get started.
 
 1. Install npm dependencies by running `npm install`
 2. Start the webpack dev server by running `npm run start`
